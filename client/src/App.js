@@ -21,7 +21,7 @@ const App = observer(() => {
   if (loading) {
     return (
       <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Spinner />
+        <Spinner animation="border" variant="danger"/>
       </div>
     )
   }
