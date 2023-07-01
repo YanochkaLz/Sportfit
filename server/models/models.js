@@ -4,25 +4,26 @@ const { DataTypes } = require('sequelize')
 const User = sequelize.define('user', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING},
-    phone: { type: DataTypes.INTEGER, unique: true },
+    phone: { type: DataTypes.STRING, unique: true },
     email: { type: DataTypes.STRING, unique: true },
     password: { type: DataTypes.STRING },
     role: { type: DataTypes.STRING, defaultValue: 'USER' }
 })
 
-const Type = sequelize.define('type', {
+const Item = sequelize.define('item', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: true, allowNull: false },
-})
-
-const Item = sequelize.define('device', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, allowNull: false, unique: true },
+    name: { type: DataTypes.STRING, allowNull: false },
     price: { type: DataTypes.INTEGER, allowNull: false },
+    typeId: {type: DataTypes.INTEGER, allowNull: false},
     rating: { type: DataTypes.INTEGER, defaultValue: 0 },
     img: { type: DataTypes.STRING, allowNull: false },
     itemColors: { type: DataTypes.JSON},
     itemSizes: { type: DataTypes.JSON},
+})
+
+const Type = sequelize.define('type', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, unique: true, allowNull: false },
 })
 
 const Rating = sequelize.define('rating', {
