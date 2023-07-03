@@ -6,13 +6,13 @@ const ApiError = require('../error/ApiError')
 class ItemController {
     async create(req, res, next) {
         try {
-            const { name, price, typeId, itemColors, itemSizes } = req.body
+            const { name, price, typeId, itemSizes } = req.body
             const { img } = req.files
             let fileName = uuid.v4() + ".jpg" // generate uniue id
             img.mv(path.resolve(__dirname, '..', 'static', fileName)) // parse getting file to folder
 
             // parse into data base
-            const item = await Item.create({ name, price, typeId, img: fileName, itemColors, itemSizes })
+            const item = await Item.create({ name, price, typeId, img: fileName, itemSizes: itemSizes.split(',').map(item => parseFloat(item))})
             return res.json(item)
         } catch (e) {
             next(ApiError.badRequest(e.message))

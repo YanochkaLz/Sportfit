@@ -41,7 +41,7 @@ const Auth = () => {
                 history('/')
             }
         } catch (e) {
-            alert(e.response.response.message)
+            alert(e.response.data.message)
         }
     }
 
@@ -134,7 +134,7 @@ const Auth = () => {
                         value: /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,12}$/,
                         message: <PasswordError/>
                     }
-                })} placeholder="Password" />
+                })} type='password' placeholder="Password" />
                 {errors?.password &&
                     <AlertMessage text={errors?.password?.message || "Ошибка!"} />
                 }
