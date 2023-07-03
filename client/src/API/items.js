@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createItemUrl } from "../Config/serverAPI";
+import { createItemUrl, getAllItemsUrl, getOneItemUrl } from "../Config/serverAPI";
 
 export const createItem = async (dataObj) => {
     const token = localStorage.getItem("jwtToken");
@@ -12,4 +12,18 @@ export const createItem = async (dataObj) => {
         return data;
     }
     return false;
+}
+
+export const getItems = async (typeId, page = 1, limit = 12) => {
+    const { data } = await axios.get(getAllItemsUrl, {
+        params: {
+            typeId, page, limit
+        }
+    });
+    return data;
+}
+
+export const getItem = async (id) => {
+    const { data } = await axios.get(`${getOneItemUrl}/${id}`);
+    return data;
 }
