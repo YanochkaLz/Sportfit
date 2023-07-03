@@ -12,7 +12,7 @@ class ItemController {
             img.mv(path.resolve(__dirname, '..', 'static', fileName)) // parse getting file to folder
 
             // parse into data base
-            const item = await Item.create({ name, price, typeId, img: fileName, itemSizes: itemSizes.split(',').map(item => parseFloat(item))})
+            const item = await Item.create({ name, price, typeId, img: fileName, itemSizes: itemSizes.split(',').map(item => parseFloat(item)) })
             return res.json(item)
         } catch (e) {
             next(ApiError.badRequest(e.message))
@@ -20,26 +20,31 @@ class ItemController {
     }
 
     async getAll(req, res) {
-        let { typeId, limit, page } = req.query
-        page = page || 1
-        limit = limit || 9
-        let offset = page * limit - limit
+        let { typeId, limit, page, all } = req.query
         let items;
-
-        // in depence on id make request to data base, filtration
-        if (!typeId) {
-            items = await Item.findAndCountAll({limit, offset})
+        if (all) {
+            items = await Item.findAndCountAll()
         } else {
-            items = await Item.findAndCountAll({ where: { typeId }, limit, offset })
+            page = page || 1
+            limit = limit || 9
+            let offset = page * limit - limit
+
+            // in depence on id make request to data base, filtration
+            if (!typeId) {
+                items = await Item.findAndCountAll({ limit, offset })
+            } else {
+                items = await Item.findAndCountAll({ where: { typeId }, limit, offset })
+            }
         }
+
         return res.json(items)
     }
 
     async getOne(req, res) {
-        const {id} = req.params
+        const { id } = req.params
         const device = await Item.findOne(
             {
-                where: {id}
+                where: { id }
             }
         )
         return res.json(device)

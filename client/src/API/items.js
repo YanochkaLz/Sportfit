@@ -14,10 +14,10 @@ export const createItem = async (dataObj) => {
     return false;
 }
 
-export const getItems = async (typeId, page = 1, limit = 12) => {
+export const getItems = async (typeId, page = 1, limit = 12, all = false) => {
     const { data } = await axios.get(getAllItemsUrl, {
         params: {
-            typeId, page, limit
+            typeId, page, limit, all
         }
     });
     return data;

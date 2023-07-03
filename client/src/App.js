@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "./index";
-import { Spinner } from "react-bootstrap"
 import { check } from "./API/user";
 import AppRoutes from "./Routes/AppRoutes";
 import { observer } from 'mobx-react-lite';
+import NavBar from "./Components/NavBar";
+import { BrowserRouter } from "react-router-dom";
+import SpinnerComponent from "./Components/SpinnerComponent";
 
 const App = observer(() => {
   const { user } = useContext(Context)
@@ -20,14 +22,15 @@ const App = observer(() => {
 
   if (loading) {
     return (
-      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Spinner animation="border" variant="danger"/>
-      </div>
+      <SpinnerComponent/>
     )
   }
 
   return (
-    <AppRoutes/>
+    <BrowserRouter>
+      <NavBar />
+      <AppRoutes />
+    </BrowserRouter>
   );
 })
 
