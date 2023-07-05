@@ -57,15 +57,18 @@
     .announcements {
         background-color: #F1F1F1;
         padding: 107px 0px;
+
         &-container {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 36px;
         }
+
         &-photo {
             position: relative;
         }
+
         &-title {
             position: absolute;
             bottom: 0;
@@ -78,6 +81,7 @@
             background-color: #A04955;
             opacity: .8;
         }
+
         &-block {
             text-align: center;
         }
@@ -85,6 +89,7 @@
 
     .original {
         position: relative;
+
         &-container {
             position: absolute;
             height: 100%;
@@ -99,7 +104,8 @@
     }
 
     .trend {
-        margin: 100px 50px;
+        margin: 0px 50px;
+        margin-top: 100px;
 
         &-container {
             font-size: 65px;
@@ -113,15 +119,22 @@
     }
 
     .legacy {
-        text-align: center;
-        margin: 0 8%;
+        margin: 240px 8%;
         position: relative;
+
         &-container {
-            padding: 130px 80px 43px 80px;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            top: -125px;
+        }
+
+        &-bg {
+            height: 430px;
             background-color: #F3F3F3;
             position: relative;
-            top: -120px;
-            z-index: -1;
+            z-index: 0;
         }
     }
 

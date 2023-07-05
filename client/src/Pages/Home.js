@@ -69,28 +69,28 @@ const Home = () => {
                 <img alt='Man2' src={manImg2} />
                 <div className='announcements-title'>NEW POWELL PRINT SHIRT</div>
               </div>
-              <p style={{marginTop: '30px'}} className='main-text'>New from Old Ranch Brands, the Powell short sleeve print shirt! Look effortlessly sharp in this lightweight cotton shirt with a classic shape and convenient features.</p>
-              <Button style={{padding: '6px 60px'}} className='main-button' variant="outline-dark">SHOP POWEL SHORT SLEEVE</Button>
+              <p style={{ marginTop: '30px' }} className='main-text'>New from Old Ranch Brands, the Powell short sleeve print shirt! Look effortlessly sharp in this lightweight cotton shirt with a classic shape and convenient features.</p>
+              <Button style={{ padding: '6px 60px' }} className='main-button' variant="outline-dark">SHOP POWEL SHORT SLEEVE</Button>
             </div>
             <div className='announcements-block'>
               <div className='announcements-photo'>
                 <img alt='Man2' src={manImg3} />
                 <div className='announcements-title'>ECOTHS: NOW 30% OFF!</div>
               </div>
-              <p style={{marginTop: '30px'}} className='main-text'>Our entire Ecoths collection is on sale! Plus, for every Ecoths purchase we donate 3 meals to food banks across the United States. We’re over 400,000 meals in now.</p>
-              <Button style={{padding: '6px 60px'}} className='main-button' variant="outline-dark">SHOP ECOTHS SALE</Button>
+              <p style={{ marginTop: '30px' }} className='main-text'>Our entire Ecoths collection is on sale! Plus, for every Ecoths purchase we donate 3 meals to food banks across the United States. We’re over 400,000 meals in now.</p>
+              <Button style={{ padding: '6px 60px' }} className='main-button' variant="outline-dark">SHOP ECOTHS SALE</Button>
             </div>
           </div>
         </Container>
       </section>
 
       <section className='original'>
-        <img style={{width: '100%'}} alt='Walking' src={walkingImg}/>
+        <img style={{ width: '100%' }} alt='Walking' src={walkingImg} />
         <div className='original-container'>
           <Container>
-            <div className='main-title' style={{color: 'white'}}>SPORTIF <br></br> ORIGINAL PANT</div>
-            <div className='main-text' style={{color: 'white'}}>Our classic nautical cargo pants are built to last and designed to exceed your expectations! Crafted from our stretch twill blend that offers the comfort of cotton, the wrinkle resistance of polyester and the mobility of Lycra®.</div>
-            <Button className='main-button' style={{color: 'white', backgroundColor: '#A04955', border: 'none'}}>SHOP SPORTIF ORIGINAL PANT</Button>
+            <div className='main-title' style={{ color: 'white' }}>SPORTIF <br></br> ORIGINAL PANT</div>
+            <div className='main-text' style={{ color: 'white' }}>Our classic nautical cargo pants are built to last and designed to exceed your expectations! Crafted from our stretch twill blend that offers the comfort of cotton, the wrinkle resistance of polyester and the mobility of Lycra®.</div>
+            <Button className='main-button' style={{ color: 'white', backgroundColor: '#A04955', border: 'none' }}>SHOP SPORTIF ORIGINAL PANT</Button>
           </Container>
         </div>
       </section>
@@ -100,11 +100,12 @@ const Home = () => {
       </section>
 
       <section className='legacy'>
-        <img src={yearsImg} alt='Legacy'/>
+        <div className='legacy-bg'></div>
         <div className='legacy-container'>
+          <img src={yearsImg} alt='Legacy' />
           <div className='main-title'>FAMILY OWNED LEGACY</div>
-          <div className='main-text' style={{maxWidth: "none", marginTop: '30px', marginBottom: '30px'}}>We are proud to celebrate over 50 years of excellence as a family owned and operated business.</div>
-          <Button style={{padding: '8px 35px'}} className='main-button' variant="outline-dark">ABOUT US</Button>
+          <div className='main-text' style={{ maxWidth: "none", marginTop: '30px', marginBottom: '30px' }}>We are proud to celebrate over 50 years of excellence as a family owned and operated business.</div>
+          <Button style={{ padding: '8px 35px' }} className='main-button' variant="outline-dark">ABOUT US</Button>
         </div>
       </section>
     </div>

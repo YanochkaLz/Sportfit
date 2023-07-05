@@ -7,6 +7,7 @@ import NavBar from "./Components/NavBar";
 import { BrowserRouter } from "react-router-dom";
 import SpinnerComponent from "./Components/SpinnerComponent";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop";
+import Footer from "./Components/Footer";
 
 const App = observer(() => {
   const { user } = useContext(Context)
@@ -31,6 +32,7 @@ const App = observer(() => {
     <BrowserRouter>
       <NavBar />
       <AppRoutes />
+      <Footer/>
       <ScrollToTop/>
     </BrowserRouter>
   );
