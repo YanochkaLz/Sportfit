@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import NavBar from "./Components/NavBar";
 import { BrowserRouter } from "react-router-dom";
 import SpinnerComponent from "./Components/SpinnerComponent";
+import ScrollToTop from "./Components/ScrollToTop/ScrollToTop";
 
 const App = observer(() => {
   const { user } = useContext(Context)
@@ -22,7 +23,7 @@ const App = observer(() => {
 
   if (loading) {
     return (
-      <SpinnerComponent/>
+      <SpinnerComponent />
     )
   }
 
@@ -30,6 +31,7 @@ const App = observer(() => {
     <BrowserRouter>
       <NavBar />
       <AppRoutes />
+      <ScrollToTop/>
     </BrowserRouter>
   );
 })

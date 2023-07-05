@@ -10,7 +10,6 @@ import '../Styles/Navbar.scss'
 import SpinnerComponent from './SpinnerComponent';
 import { getTypes } from '../API/type';
 import { getItems } from '../API/items';
-import { Offcanvas } from 'react-bootstrap';
 
 const NavBar = () => {
     const inputRef = useRef(null);

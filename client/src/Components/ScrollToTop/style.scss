@@ -1,0 +1,18 @@
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 99;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #A04955;
+    opacity: .8;
+    border: none;
+    transition: transform .5s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}

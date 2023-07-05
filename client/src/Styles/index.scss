@@ -2,22 +2,44 @@
     font-family: 'OpenSans-Light';
     src: url('../Assets/fonts/OpenSans_Condensed-Light.ttf');
 }
+
 @font-face {
     font-family: 'Oswald-Bold';
     src: url('../Assets/fonts/Oswald-Bold.ttf');
 }
+
 @font-face {
     font-family: 'Oswald-Light';
     src: url('../Assets/fonts/Oswald-Light.ttf');
 }
+
 @font-face {
     font-family: 'Oswald-Medium';
     src: url('../Assets/fonts/Oswald-Medium.ttf');
 }
+
 @font-face {
     font-family: 'Oswald-Regular';
     src: url('../Assets/fonts/Oswald-Regular.ttf');
 }
+
 body {
     font-family: 'OpenSans-Light';
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+        background-color: #f9f9fd;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: linear-gradient(180deg, #001F3D, #A04955);
+    }
+
 }
+
