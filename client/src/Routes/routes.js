@@ -21,7 +21,7 @@ export const publicRoutes = [
         Component: <Home/>
     },
     {
-        path: '/shop',
+        path: '/shop/:id',
         Component: <Shop/>
     },
     {

@@ -27,12 +27,12 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
 
             toggleShow(prev => !prev)
             onAdd({ ...data, itemSizes: sizes, type: typeId?.id, file: currentFile });
-            reset();
+            // reset();
         }
         if (!isItemForm) {
             toggleShow(prev => !prev)
             onAdd(data);
-            reset();
+            // reset();
         }
     }
 
@@ -92,6 +92,16 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
                                 </Form.Select>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Image</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    {...register('file', {
+                                        required: 'Поле обязательно к заполнению!',
+                                    })}
+                                    onChange={e => setCurrentFile(e.target.files[0])}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                 <Form.Label>Price</Form.Label>
                                 <Form.Control
                                     type="number"
@@ -101,16 +111,7 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
                                     })}
                                 />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>Images</Form.Label>
-                                <Form.Control
-                                    type="file"
-                                    {...register('file', {
-                                        required: 'Поле обязательно к заполнению!',
-                                    })}
-                                    onChange={e => setCurrentFile(e.target.files[0])}
-                                />
-                            </Form.Group>
+
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                 <Form.Label>Sizes</Form.Label>
                                 <div className='d-flex gap-4 align-items-center'>

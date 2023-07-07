@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
+import React, { useEffect, useRef, useState } from 'react'
+import { Alert, Container } from 'react-bootstrap'
+import { useParams } from 'react-router-dom';
 import { getItem, getItems } from '../API/items'
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import homeIcon from "../Assets/image/shop/home_icon.png";
@@ -7,19 +8,28 @@ import CardItem from '../Components/CardItem';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { PaginationControl } from 'react-bootstrap-pagination-control';
 import "../Styles/Shop.scss";
+import Filtration from '../Components/Filtration';
 const LIMIT = 12;
 
 const Shop = () => {
+  const inputRef = useRef(null);
   const [items, setItems] = useState([]);
+  const [allItems, setAllItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(null);
+  const {id} = useParams();
+
 
   const handleGetAllItems = async () => {
     try {
-      const items = await getItems(null, currentPage, LIMIT);
+      const items = await getItems(id === 'all' ? null : +id, currentPage, LIMIT);
       if (items) {
         setTotalItems(items.count);
         setItems(items.rows);
+      }
+      const allItems = await getItems(id === 'all' ? null : +id, null, null, true);
+      if (allItems) {
+        setAllItems(allItems.rows);
       }
 
     } catch (e) {
@@ -27,13 +37,35 @@ const Shop = () => {
     }
   }
 
+
   const handleGetOneItem = async (id) => {
     const item = await getItem(id)
     console.log(item)
   }
 
+  const handleSearchItem = async (name) => {
+    setCurrentPage(1)
+    if (name && allItems?.length) {
+      const finder = allItems.filter(item => item.name.toLowerCase().includes(name.toLowerCase()))
+      if (finder?.length) {
+        setItems(finder.slice(0, 12));
+        setAllItems(finder);
+        setTotalItems(finder.length);
+      }
+      else setItems(null)
+    }
+    else if (!name) {
+      handleGetAllItems()
+    }
+  }
+
+
   useEffect(() => {
-    handleGetAllItems();
+    if (inputRef.current.value) {
+      setItems(allItems.slice((currentPage - 1) * 12, (currentPage) * 12))
+    } else {
+      handleGetAllItems();
+    }
   }, [currentPage])
 
   useEffect(() => {
@@ -48,11 +80,11 @@ const Shop = () => {
           <div className='shop-navigation'>
             <Breadcrumb>
               <Breadcrumb.Item className='home-btn' href="/"><img src={homeIcon} alt='Home' />Home</Breadcrumb.Item>
-              <Breadcrumb.Item active>Shorts</Breadcrumb.Item>
+              <Breadcrumb.Item active>{id}</Breadcrumb.Item>
             </Breadcrumb>
           </div>
           <div className='shop-search'>
-            <input type='text' placeholder='SEARCH'></input>
+            <input ref={inputRef} onChange={e => handleSearchItem(e.target.value)} type='text' placeholder='SEARCH'></input>
           </div>
         </div>
       </Container>
@@ -61,11 +93,16 @@ const Shop = () => {
       <div className='shop-main'>
         <Container>
           <div className='gallery'>
-            <div className='sorting'>Sorting</div>
+            <div className='sorting'>
+              <Filtration/>
+            </div>
+
             <div className='gallery-list'>
-              {items.length && items.map(item =>
+              {items?.length ? items.map(item =>
                 <CardItem key={item.id} item={item} />
-              )}
+              ) : <Alert className='alert-noitems' variant='light'>
+                No items found!
+              </Alert>}
             </div>
           </div>
           {totalItems && items && <PaginationControl

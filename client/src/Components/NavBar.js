@@ -76,12 +76,14 @@ const NavBar = () => {
                         style={{ maxHeight: '100px', gap: '10px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/shop" >
+                        <Nav.Link href="/shop/all" >
                             Shop
                         </Nav.Link>
                         <NavDropdown title="Types" id="navbarScrollingDropdown">
                             {types && types?.map(type =>
-                                <NavDropdown.Item key={type.id} href="#action3">{type.name}</NavDropdown.Item>
+                                <Nav.Link key={type.id} href={`/shop/${type.id}`}>
+                                    {type.name}
+                                </Nav.Link>
                             )}
                         </NavDropdown>
                         <Nav.Link href="/" >
