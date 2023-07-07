@@ -10,6 +10,9 @@ import '../Styles/Navbar.scss'
 import SpinnerComponent from './SpinnerComponent';
 import { getTypes } from '../API/type';
 import { getItems } from '../API/items';
+import { useDispatch } from 'react-redux';
+import { setStoreTypes } from '../features/typesSlice';
+
 
 const NavBar = () => {
     const inputRef = useRef(null);
@@ -17,11 +20,14 @@ const NavBar = () => {
     const [types, setTypes] = useState(null);
     const [items, setItems] = useState(null);
     const [searchingItems, setSearchingItems] = useState(null)
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
         try {
             getTypes().then(data => {
                 if (data) {
+                    dispatch(setStoreTypes(data));
                     setTypes(data)
                 }
             })

@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { PaginationControl } from 'react-bootstrap-pagination-control';
 import "../Styles/Shop.scss";
 import Filtration from '../Components/Filtration';
+import { useSelector } from 'react-redux';
 const LIMIT = 12;
 
 const Shop = () => {
@@ -17,8 +18,11 @@ const Shop = () => {
   const [allItems, setAllItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(null);
+  const [titlePage, setTittlePage] = useState('all');
   const {id} = useParams();
+  const allTypes = useSelector(state => state.types.types)
 
+  console.log(items);
 
   const handleGetAllItems = async () => {
     try {
@@ -59,6 +63,12 @@ const Shop = () => {
     }
   }
 
+  useEffect(() => {
+    if(id && allTypes?.length && id != 'all') {
+      setTittlePage(allTypes.find(type => type.id === +id).name)
+    }
+  }, [id, allTypes])
+
 
   useEffect(() => {
     if (inputRef.current.value) {
@@ -80,7 +90,7 @@ const Shop = () => {
           <div className='shop-navigation'>
             <Breadcrumb>
               <Breadcrumb.Item className='home-btn' href="/"><img src={homeIcon} alt='Home' />Home</Breadcrumb.Item>
-              <Breadcrumb.Item active>{id}</Breadcrumb.Item>
+              <Breadcrumb.Item active>{titlePage}</Breadcrumb.Item>
             </Breadcrumb>
           </div>
           <div className='shop-search'>
