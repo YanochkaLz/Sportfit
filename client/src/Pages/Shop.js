@@ -10,7 +10,7 @@ import { PaginationControl } from 'react-bootstrap-pagination-control';
 import "../Styles/Shop.scss";
 import Filtration from '../Components/Filtration';
 import { useSelector } from 'react-redux';
-const LIMIT = 12;
+const LIMIT = 6;
 
 
 const Shop = () => {
@@ -48,12 +48,13 @@ const Shop = () => {
     console.log(item)
   }
 
+
   const handleSearchItem = async (name) => {
     setCurrentPage(1)
     if (name && allItems?.length) {
       const finder = allItems.filter(item => item.name.toLowerCase().includes(name.toLowerCase()))
       if (finder?.length) {
-        setItems(finder.slice(0, 12));
+        setItems(finder.slice(0, LIMIT));
         setAllItems(finder);
         setTotalItems(finder.length);
       }
@@ -73,7 +74,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (inputRef.current.value) {
-      setItems(allItems.slice((currentPage - 1) * 12, (currentPage) * 12))
+      setItems(allItems.slice((currentPage - 1) * LIMIT, (currentPage) * LIMIT))
     } else {
       handleGetAllItems();
     }
@@ -112,7 +113,8 @@ const Shop = () => {
               </Alert>}
             </div>
           </div>
-          {totalItems && items && <PaginationControl
+
+          {totalItems && items?.length && <PaginationControl
             page={currentPage}
             between={4}
             total={totalItems}

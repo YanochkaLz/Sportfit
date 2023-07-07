@@ -26,7 +26,7 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
             const typeId = type ? types.find(typeName => typeName.name === type) : types[0];
 
             toggleShow(prev => !prev)
-            onAdd({ ...data, itemSizes: sizes, type: typeId?.id, file: currentFile });
+            onAdd({ ...data, itemSizes: sizes, type: typeId?.id, file: currentFile});
             // reset();
         }
         if (!isItemForm) {
@@ -35,7 +35,6 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
             // reset();
         }
     }
-
 
     useEffect(() => {
         if (isItemForm && onShow) {
@@ -55,11 +54,11 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
 
     return (
         <Modal show={onShow} onHide={() => {
-            reset()
+            // reset()
             toggleShow(prev => !prev)
         }}>
             <Modal.Header closeButton>
-                <Modal.Title>Create Item</Modal.Title>
+                <Modal.Title>Create {isItemForm ? 'Item' : 'Type'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit(handleAdd)}>
@@ -67,7 +66,7 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
                         <Form.Label>Name</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Enter name of clothing"
+                            placeholder="Enter a name"
                             {...register('name', {
                                 required: 'Поле обязательно к заполнению!',
                                 minLength: {
@@ -75,8 +74,8 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
                                     message: 'Минимум 2 символа!'
                                 },
                                 maxLength: {
-                                    value: 20,
-                                    message: 'Максимум 20 символов!'
+                                    value: 50,
+                                    message: 'Максимум 50 символов!'
                                 },
                             })}
                         />
@@ -104,7 +103,7 @@ const FormComponent = ({ onShow, toggleShow, onAdd, isItemForm = false }) => {
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                 <Form.Label>Price</Form.Label>
                                 <Form.Control
-                                    type="number"
+                                    type="text"
                                     placeholder="Enter price of clothing in dollars"
                                     {...register('price', {
                                         required: 'Поле обязательно к заполнению!',

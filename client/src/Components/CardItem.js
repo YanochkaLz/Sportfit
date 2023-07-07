@@ -27,7 +27,7 @@ const StarsGroup = ({ rating }) => {
 const CardItem = ({ item }) => {
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card>
       <div className='img-container'>
         <Card.Img variant="top" src={apiUrl + '/' + item.img} />
       </div>
