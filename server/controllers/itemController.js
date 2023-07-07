@@ -23,7 +23,11 @@ class ItemController {
         let { typeId, limit, page, all } = req.query
         let items;
         if (all) {
-            items = await Item.findAndCountAll()
+            if(typeId) {
+                items = await Item.findAndCountAll({ where: { typeId } })
+            } else {
+                items = await Item.findAndCountAll()
+            }
         } else {
             page = page || 1
             limit = limit || 9

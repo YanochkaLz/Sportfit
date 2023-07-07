@@ -22,7 +22,6 @@ const NavBar = () => {
     const [searchingItems, setSearchingItems] = useState(null)
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         try {
             getTypes().then(data => {
@@ -39,7 +38,7 @@ const NavBar = () => {
         } catch (e) {
             alert(e.response.data.message)
         }
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (items && types) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert, Container } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import { getItem, getItems } from '../API/items'
@@ -19,10 +19,11 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(null);
   const [titlePage, setTittlePage] = useState('all');
-  const {id} = useParams();
+  const { id } = useParams();
   const allTypes = useSelector(state => state.types.types)
 
-  console.log(items);
+  console.log(allItems)
+
 
   const handleGetAllItems = async () => {
     try {
@@ -64,7 +65,7 @@ const Shop = () => {
   }
 
   useEffect(() => {
-    if(id && allTypes?.length && id != 'all') {
+    if (id && allTypes?.length && id !== 'all') {
       setTittlePage(allTypes.find(type => type.id === +id).name)
     }
   }, [id, allTypes])
@@ -104,7 +105,7 @@ const Shop = () => {
         <Container>
           <div className='gallery'>
             <div className='sorting'>
-              <Filtration/>
+              <Filtration />
             </div>
 
             <div className='gallery-list'>
