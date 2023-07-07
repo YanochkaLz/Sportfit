@@ -4,8 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import logoImg from '../Assets/homepage/logo.svg'
-import searchImg from '../Assets/homepage/Search.svg'
+import logoImg from '../Assets/image/navbar/logo.svg'
+import searchImg from '../Assets/image/navbar/Search.svg'
 import '../Styles/Navbar.scss'
 import SpinnerComponent from './SpinnerComponent';
 import { getTypes } from '../API/type';
@@ -13,7 +13,7 @@ import { getItems } from '../API/items';
 
 const NavBar = () => {
     const inputRef = useRef(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [types, setTypes] = useState(null);
     const [items, setItems] = useState(null);
     const [searchingItems, setSearchingItems] = useState(null)

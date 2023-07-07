@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.scss'
 import { Button } from 'react-bootstrap';
-import arrowImg from "../../Assets/homepage/Arrow.svg"
+import arrowImg from "../../Assets/image/homepage/Arrow.svg"
 
 const ScrollToTop = () => {
   window.onload = () => {

@@ -1,0 +1,16 @@
+.card {
+    &-title {
+        margin: 10px 0 !important;
+        font-family: 'Oswald-Regular';
+        font-size: 20px;
+    }
+
+    &-price {
+        font-family: 'Oswald-Light';
+        font-size: 18px;
+
+        span {
+            font-family: 'Oswald-Medium';
+        }
+    }
+}

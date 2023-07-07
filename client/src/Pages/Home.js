@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import "../Styles/Homepage.scss";
-import manImg1 from "../Assets/homepage/man1.jpg"
-import manImg2 from "../Assets/homepage/man2.png"
-import manImg3 from "../Assets/homepage/man3.png"
-import yearsImg from "../Assets/homepage/50years.png"
-import walkingImg from "../Assets/homepage/walking-bg.jpg"
-import pantsImg from "../Assets/homepage/pants-image.png"
+import manImg1 from "../Assets/image/homepage/man1.jpg"
+import manImg2 from "../Assets/image/homepage/man2.png"
+import manImg3 from "../Assets/image/homepage/man3.png"
+import yearsImg from "../Assets/image/homepage/50years.png"
+import walkingImg from "../Assets/image/homepage/walking-bg.jpg"
+import pantsImg from "../Assets/image/homepage/pants-image.png"
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
+import CustomButton from '../Components/Button/CustomButton';
 
 const Home = () => {
   const [heightWindow, setHeightWindow] = useState(null);
@@ -90,7 +91,7 @@ const Home = () => {
           <Container>
             <div className='main-title' style={{ color: 'white' }}>SPORTIF <br></br> ORIGINAL PANT</div>
             <div className='main-text' style={{ color: 'white' }}>Our classic nautical cargo pants are built to last and designed to exceed your expectations! Crafted from our stretch twill blend that offers the comfort of cotton, the wrinkle resistance of polyester and the mobility of Lycra®.</div>
-            <Button className='main-button' style={{ color: 'white', backgroundColor: '#A04955', border: 'none' }}>SHOP SPORTIF ORIGINAL PANT</Button>
+            <CustomButton styles={{fontSize: '24px'}} content={'SHOP SPORTIF ORIGINAL PANT'}/>
           </Container>
         </div>
       </section>

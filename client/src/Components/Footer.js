@@ -1,6 +1,7 @@
 import React from 'react'
 import "../Styles/Footer.scss"
-import { Button } from 'react-bootstrap'
+import CustomButton from './Button/CustomButton'
+
 
 const Footer = () => {
     return (
@@ -46,7 +47,7 @@ const Footer = () => {
                         <p style={{ marginBottom: '20px' }}>Sign Up for Our Newsletter:</p>
                         <div className='input-holder'>
                             <input placeholder='EMAIL ADDRESS' type='email' className='footer-input'></input>
-                            <Button>Subscribe</Button>
+                            <CustomButton content={'Subscribe'}></CustomButton>
                         </div>
                     </label>
 

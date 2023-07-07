@@ -14,7 +14,7 @@ export const createItem = async (dataObj) => {
     return false;
 }
 
-export const getItems = async (typeId, page = 1, limit = 12, all = false) => {
+export const getItems = async (typeId, page, limit, all) => {
     const { data } = await axios.get(getAllItemsUrl, {
         params: {
             typeId, page, limit, all
