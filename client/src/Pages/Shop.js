@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Alert, Container } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import { getItem, getItems } from '../API/items'
@@ -12,6 +12,7 @@ import Filtration from '../Components/Filtration';
 import { useSelector } from 'react-redux';
 const LIMIT = 12;
 
+
 const Shop = () => {
   const inputRef = useRef(null);
   const [items, setItems] = useState([]);
@@ -22,8 +23,7 @@ const Shop = () => {
   const { id } = useParams();
   const allTypes = useSelector(state => state.types.types)
 
-  console.log(allItems)
-
+  const filtrationComponent = useMemo(() => <Filtration allItems={allItems} />, [allItems])
 
   const handleGetAllItems = async () => {
     try {
@@ -79,10 +79,6 @@ const Shop = () => {
     }
   }, [currentPage])
 
-  useEffect(() => {
-    handleGetAllItems()
-  }, [])
-
 
   return (
     <div className='shop'>
@@ -105,7 +101,7 @@ const Shop = () => {
         <Container>
           <div className='gallery'>
             <div className='sorting'>
-              <Filtration />
+                {filtrationComponent}
             </div>
 
             <div className='gallery-list'>

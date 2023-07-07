@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Accordion from 'react-bootstrap/Accordion';
 
 
-const Filtration = () => {
+const Filtration = ({allItems}) => {
+    const [sizes, setSizes] = useState(null);
+    const [colors, setColors] = useState(null);
+
+    useEffect(() => {
+        if(allItems?.length) {
+            
+        }
+    }, [allItems]);
+
     return (
         <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
