@@ -11,29 +11,36 @@ import "../Styles/Shop.scss";
 import Filtration from '../Components/Filtration';
 import { useSelector } from 'react-redux';
 const LIMIT = 6;
+const RESTART = 'restart';
+
+function commonElements(array1, array2) {
+  return array1.filter(item => array2.includes(item));
+}
 
 
 const Shop = () => {
   const inputRef = useRef(null);
   const [items, setItems] = useState([]);
   const [allItems, setAllItems] = useState([]);
+  const [globalItems, setGlobalItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(null);
   const [titlePage, setTittlePage] = useState('all');
   const { id } = useParams();
-  const allTypes = useSelector(state => state.types.types)
+  const allTypes = useSelector(state => state.types.types);
 
-  const filtrationComponent = useMemo(() => <Filtration allItems={allItems} />, [allItems])
+  const [searchingItems, setSearchingItems] = useState(RESTART);
+  const [filteringItems, setFilteringItems] = useState(RESTART);
 
   const handleGetAllItems = async () => {
     try {
       const items = await getItems(id === 'all' ? null : +id, currentPage, LIMIT);
       if (items) {
         setTotalItems(items.count);
-        setItems(items.rows);
       }
       const allItems = await getItems(id === 'all' ? null : +id, null, null, true);
       if (allItems) {
+        setGlobalItems(allItems.rows);
         setAllItems(allItems.rows);
       }
 
@@ -49,21 +56,48 @@ const Shop = () => {
   }
 
 
+
   const handleSearchItem = async (name) => {
     setCurrentPage(1)
-    if (name && allItems?.length) {
-      const finder = allItems.filter(item => item.name.toLowerCase().includes(name.toLowerCase()))
+    if (name && globalItems?.length) {
+      const finder = globalItems.filter(item => item.name.toLowerCase().includes(name.toLowerCase()))
       if (finder?.length) {
-        setItems(finder.slice(0, LIMIT));
-        setAllItems(finder);
-        setTotalItems(finder.length);
+        setSearchingItems(finder);
       }
-      else setItems(null)
+      else setSearchingItems([])
     }
     else if (!name) {
-      handleGetAllItems()
+      setSearchingItems(RESTART)
     }
   }
+
+  const handleApplyFiltration = (newAllItems) => {
+    setCurrentPage(1)
+    setFilteringItems(newAllItems)
+  }
+
+  const filtrationComponent = useMemo(() => <Filtration handleApplyFiltration={handleApplyFiltration} allItems={globalItems} />, [globalItems])
+
+
+  useEffect(() => {
+    if (filteringItems === RESTART && searchingItems === RESTART) {
+      handleGetAllItems();
+    } else if (!filteringItems.length || !searchingItems.length) {
+      setItems(null)
+    } else {
+      let gettingArray = [];
+      if (filteringItems === RESTART && searchingItems !== RESTART) {
+        gettingArray = searchingItems;
+      } else if (filteringItems !== RESTART && searchingItems === RESTART) {
+        gettingArray = filteringItems;
+      } else {
+        gettingArray = commonElements(filteringItems, searchingItems);
+      }
+      setAllItems(gettingArray);
+      setTotalItems(gettingArray.length);
+    }
+  }, [searchingItems, filteringItems])
+
 
   useEffect(() => {
     if (id && allTypes?.length && id !== 'all') {
@@ -73,12 +107,10 @@ const Shop = () => {
 
 
   useEffect(() => {
-    if (inputRef.current.value) {
+    if (allItems) {
       setItems(allItems.slice((currentPage - 1) * LIMIT, (currentPage) * LIMIT))
-    } else {
-      handleGetAllItems();
     }
-  }, [currentPage])
+  }, [currentPage, allItems])
 
 
   return (
@@ -102,7 +134,7 @@ const Shop = () => {
         <Container>
           <div className='gallery'>
             <div className='sorting'>
-                {filtrationComponent}
+              {filtrationComponent}
             </div>
 
             <div className='gallery-list'>

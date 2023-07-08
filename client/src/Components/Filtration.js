@@ -4,74 +4,74 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import CustomButton from './Button/CustomButton';
+import { arraySizes } from '../Config/allSizes';
 
-const Filtration = ({ allItems }) => {
-    const [sizes, setSizes] = useState(null);
-    const [price, setPrice] = useState(null);
+const defaultMaxPrice = Number.MAX_VALUE;
+
+const Filtration = ({ allItems, handleApplyFiltration }) => {
+    const [price, setPrice] = useState({ from: 0, to: defaultMaxPrice });
     const [set, setSet] = useState(new Set());
-    const [currentPrices, setCurrentPrice] = useState(null);
-
-    useEffect(() => {
-        const SetSizes = new Set()
-        const prices = []
-        if (allItems?.length) {
-            allItems.forEach(item => {
-                prices.push(item.price)
-                item.itemSizes.forEach(size => {
-                    SetSizes.add(size)
-                })
-                setSizes(Array.from(SetSizes).sort())
-            })
-        }
-        prices.sort()
-        setCurrentPrice({
-            from: prices[0],
-            to: prices[prices.length - 1]
-        })
-        setPrice({
-            from: prices[0],
-            to: prices[prices.length - 1]
-        })
-
-    }, [allItems]);
-
-    useEffect(() => {
-        console.log(set, price)
-    }, [set, price])
 
     const handlePickSizes = (e) => {
-        if (set.has(e)) {
-            set.delete(e)
+        const number = +e;
+        if (set.has(number)) {
+            set.delete(number)
         } else {
-            set.add(e);
+            set.add(number);
         }
         setSet(new Set(set));
     }
 
+    const handleApplyFiltering = () => {
+        if (allItems?.length) {
+            let newAllItems;
+            const sizes = Array.from(set);
+            if (set.size && price.to === defaultMaxPrice && !price.from) {
+                newAllItems = allItems.filter(item => {
+                    return sizes ? item.itemSizes.some(size => sizes.includes(size)) : true;
+                });
+            } else if (!set.size && (price.to !== defaultMaxPrice || price.from)) {
+                newAllItems = allItems.filter(item => {
+                    return item.price >= price.from && item.price <= price.to;
+                });
+            } else if (set.size && (price.to !== defaultMaxPrice || price.from)) {
+                newAllItems = allItems.filter(item => {
+                    return item.price >= price.from && item.price <= price.to && (sizes ? item.itemSizes.some(size => sizes.includes(size)) : true);
+                });
+            } else {
+                newAllItems = 'restart';
+            }
+            handleApplyFiltration(newAllItems)
+        }
+    }
+
     return (
         <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>Size</Accordion.Header>
-                <Accordion.Body>
-                    {sizes?.length && sizes.map((size, index) => {
-                        return <Button active={set.has(size.toString())} onClick={e => handlePickSizes(e.target.value)} value={size} key={index}>{size}</Button>
-                    }
-                    )}
-                </Accordion.Body>
-            </Accordion.Item>
+            {allItems?.length && allItems[0].typeId !== 4 &&
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>Size</Accordion.Header>
+                    <Accordion.Body>
+                        {arraySizes?.length && arraySizes.map((size, index) => {
+                            return <Button active={set.has(size)} onClick={e => handlePickSizes(e.target.value)} value={size} key={index}>{size}</Button>
+                        }
+                        )}
+                    </Accordion.Body>
+                </Accordion.Item>
+            }
+
 
             <Accordion.Item eventKey="1">
                 <Accordion.Header>Price</Accordion.Header>
                 <Accordion.Body>
                     <InputGroup className="mb-3">
-                        <InputGroup.Text>From {currentPrices?.from && `${currentPrices?.from}$`}</InputGroup.Text>
-                        <Form.Control onChange={e => setPrice(prev => ({...prev, from: parseFloat(e.target.value) }))} type='number' placeholder="Enter price from" />
-                        <InputGroup.Text>To {currentPrices?.to && `${currentPrices?.to}$`}</InputGroup.Text>
-                        <Form.Control onChange={e => setPrice(prev => ({...prev, to: parseFloat(e.target.value) }))} type='number' placeholder="Enter price to" />
+                        <InputGroup.Text>From</InputGroup.Text>
+                        <Form.Control onChange={e => setPrice(prev => ({ ...prev, from: e.target.value === '' ? 0 : parseFloat(e.target.value) }))} type='number' placeholder="Enter price from" />
+                        <InputGroup.Text>To</InputGroup.Text>
+                        <Form.Control onChange={e => setPrice(prev => ({ ...prev, to: e.target.value === '' ? defaultMaxPrice : parseFloat(e.target.value) }))} type='number' placeholder="Enter price to" />
                     </InputGroup>
                 </Accordion.Body>
             </Accordion.Item>
-            <CustomButton styles={{margin: '20px auto', fontFamily: 'Oswald-Regular'}} content={'Apply filtering'}></CustomButton>
+            <CustomButton onClick={handleApplyFiltering} styles={{ margin: '20px auto', fontFamily: 'Oswald-Regular' }} content={'Apply filtering'}></CustomButton>
         </Accordion>
     )
 }
