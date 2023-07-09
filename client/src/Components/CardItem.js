@@ -16,7 +16,7 @@ const ContentButton = () => {
   )
 }
 
-const StarsGroup = ({ rating }) => {
+export const StarsGroup = ({ rating }) => {
   return (
     <>
       {new Array(5).fill(1).map((_, index) => <img key={index} alt='Star' src={index < rating ? yellowStarImg : greyStarImg} />)}
@@ -24,10 +24,10 @@ const StarsGroup = ({ rating }) => {
   )
 }
 
-const CardItem = ({ item }) => {
+const CardItem = ({ item, onClick}) => {
 
   return (
-    <Card>
+    <Card onClick={onClick} style={{cursor: 'pointer'}}>
       <div className='img-container'>
         <Card.Img variant="top" src={apiUrl + '/' + item.img} />
       </div>

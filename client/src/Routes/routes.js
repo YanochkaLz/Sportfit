@@ -2,6 +2,7 @@ import Admin from "../Pages/Admin"
 import Auth from "../Pages/Auth"
 import Basket from "../Pages/Basket"
 import Home from "../Pages/Home"
+import ItemPage from "../Pages/ItemPage"
 import Shop from "../Pages/Shop"
 
 export const authRoutes = [
@@ -19,6 +20,10 @@ export const publicRoutes = [
     {
         path: '/',
         Component: <Home/>
+    },
+    {
+        path: '/item/:id',
+        Component: <ItemPage/>
     },
     {
         path: '/shop/:id',

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Alert, Container } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
-import { getItem, getItems } from '../API/items'
+import { useNavigate, useParams } from 'react-router-dom';
+import { getItems } from '../API/items'
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import homeIcon from "../Assets/image/shop/home_icon.png";
 import CardItem from '../Components/CardItem';
@@ -28,6 +28,7 @@ const Shop = () => {
   const [titlePage, setTittlePage] = useState('all');
   const { id } = useParams();
   const allTypes = useSelector(state => state.types.types);
+  const nav = useNavigate();
 
   const [searchingItems, setSearchingItems] = useState(RESTART);
   const [filteringItems, setFilteringItems] = useState(RESTART);
@@ -47,12 +48,6 @@ const Shop = () => {
     } catch (e) {
       alert(e.response.data.message);
     }
-  }
-
-
-  const handleGetOneItem = async (id) => {
-    const item = await getItem(id)
-    console.log(item)
   }
 
 
@@ -139,7 +134,7 @@ const Shop = () => {
 
             <div className='gallery-list'>
               {items?.length ? items.map(item =>
-                <CardItem key={item.id} item={item} />
+                <CardItem onClick={() => nav('/item/' + item.id)} key={item.id} item={item} />
               ) : <Alert className='alert-noitems' variant='light'>
                 No items found!
               </Alert>}
