@@ -28,6 +28,8 @@ const Type = sequelize.define('type', {
 const Rating = sequelize.define('rating', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     rate: { type: DataTypes.INTEGER, allowNull: false },
+    userId: {type: DataTypes.INTEGER, allowNull: false},
+    itemId: {type: DataTypes.INTEGER, allowNull: false},
 })
 
 const Basket = sequelize.define('basket', {
