@@ -10,3 +10,5 @@ export const getAllTypesUrl = apiUrl + "/api/type";
 export const createItemUrl = apiUrl + "/api/item";
 export const getAllItemsUrl = apiUrl + "/api/item";
 export const getOneItemUrl = apiUrl + "/api/item";
+
+export const createRatingUrl = apiUrl + "/api/rating";

@@ -16,10 +16,10 @@ const ContentButton = () => {
   )
 }
 
-export const StarsGroup = ({ rating }) => {
+export const StarsGroup = ({ rating, onClick=null }) => {
   return (
     <>
-      {new Array(5).fill(1).map((_, index) => <img key={index} alt='Star' src={index < rating ? yellowStarImg : greyStarImg} />)}
+      {new Array(5).fill(1).map((_, index) => <img onClick={() => onClick ? onClick(index): null} key={index} alt='Star' src={index < rating ? yellowStarImg : greyStarImg} />)}
     </>
   )
 }

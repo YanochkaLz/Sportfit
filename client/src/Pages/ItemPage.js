@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { getItem } from '../API/items'
 import "../Styles/Item.scss"
@@ -14,6 +14,8 @@ import pinterestImg from "../Assets/image/shop/pinterest.png"
 import linkImg from "../Assets/image/shop/link.png"
 import carImg from "../Assets/image/shop/car.svg"
 import boxImg from "../Assets/image/shop/box.svg"
+import { Context } from "../index"
+import { createRating, getInfoItem } from '../API/rating';
 
 const ContentButton = () => {
   return (
@@ -28,6 +30,8 @@ const ItemPage = () => {
   const { id } = useParams();
   const [currentItem, setCurrentItem] = useState(null);
   const [currentSize, setCurrentSize] = useState(null);
+  const [infoItem, setInfoItem] = useState(null)
+  const { user } = useContext(Context)
 
 
   const handleGetOneItem = async (id) => {
@@ -37,9 +41,35 @@ const ItemPage = () => {
         setCurrentItem(item)
       }
     } catch (e) {
-      alert(e.response.data.message)
+      alert(e.response)
     }
   }
+
+  const handleChangeRatingItem = async (rate) => {
+    if (user.isAuth && user._user.id && currentItem.id) {
+      try {
+        const response = await createRating({ rate: parseInt(rate) + 1, userId: user._user.id, itemId: currentItem.id })
+        if (response) {
+          setCurrentItem(prev => ({ ...prev, rating: response.averageRating }))
+        }
+      } catch (e) {
+        alert(e.response)
+      }
+    }
+  }
+
+  const handleGettingItemInfo = async (userId, itemId) => {
+    try {
+      const response = await getInfoItem(userId, parseInt(itemId))
+      if (response) {
+        setInfoItem(response);
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  console.log(infoItem)
 
 
   useEffect(() => {
@@ -48,9 +78,17 @@ const ItemPage = () => {
     }
   }, [id])
 
+  useEffect(() => {
+    if (user?._user?.id && currentItem && id) {
+      handleGettingItemInfo(user._user.id, id);
+    }
+  }, [id, user, currentItem])
+
+
   if (!currentItem) {
     return <SpinnerComponent />
   }
+
 
   return (
     <div className='itemPage'>
@@ -61,7 +99,21 @@ const ItemPage = () => {
           </div>
           <div className='item-info'>
             <h1 className='item-title'>{currentItem.name} <span>item # {currentItem.id}</span></h1>
-            <p className='item-rating'><StarsGroup rating={currentItem.rating} /></p>
+            {user?.isAuth ?
+              <div style={{ display: "flex", alignItems: 'center' }}>
+                <div className='item-blockedRating'>overall product rating: <br></br><StarsGroup rating={currentItem.rating} /></div>
+                {infoItem &&
+                  <>
+                    <div style={{ marginLeft: '60px' }} className='item-rating'>rate this item:<br></br><StarsGroup onClick={(e) => handleChangeRatingItem(e)} rating={infoItem.rating} /></div>
+                    <div style={{ marginLeft: '60px', fontSize: '15px', textTransform:'uppercase', fontFamily: 'Oswald-Regular' }}>{infoItem.count} REVIEWS</div>
+                  </>
+                }
+              </div> :
+              <>
+                <span>overall product rating:</span>
+                <p className='item-blockedRating'><StarsGroup rating={currentItem.rating} /></p>
+              </>
+            }
             <p className='item-price'><span>As low as <br></br></span>${currentItem.price}</p>
             <div className='item-sizes'>
               {currentItem?.itemSizes?.length &&
@@ -73,12 +125,12 @@ const ItemPage = () => {
                 </>
               }
             </div>
-            <CustomButton styles={{display: 'flex', alignItems: 'center', gap: '15px', color:'white', fontSize: '24px', fontFamily: 'Oswald-Regular'}} content={<ContentButton/>}/>
+            <CustomButton styles={{ display: 'flex', alignItems: 'center', gap: '15px', color: 'white', fontSize: '24px', fontFamily: 'Oswald-Regular' }} content={<ContentButton />} />
             <div className='item-socials'>
-              <img alt='social' src={facebookImg}/>
-              <img alt='social' src={twitterImg}/>
-              <img alt='social' src={pinterestImg}/>
-              <img alt='social' src={linkImg}/>
+              <img alt='social' src={facebookImg} />
+              <img alt='social' src={twitterImg} />
+              <img alt='social' src={pinterestImg} />
+              <img alt='social' src={linkImg} />
             </div>
           </div>
         </div>
@@ -87,11 +139,11 @@ const ItemPage = () => {
             <div className='shopping-title'>- Worry Free Shopping -</div>
             <div className='shopping-container'>
               <div className='shopping-text'>
-                <img src={carImg} alt='Shopping'/>
+                <img src={carImg} alt='Shopping' />
                 <p>FREE PRIORITY SHIPPING ON ORDERS $99+*</p>
               </div>
               <div className='shopping-text'>
-                <img src={boxImg} alt='Shopping'/>
+                <img src={boxImg} alt='Shopping' />
                 <p>FREE RETURNS & EXCHANGES*</p>
               </div>
             </div>
