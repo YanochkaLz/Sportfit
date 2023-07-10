@@ -26,6 +26,7 @@ const NavBar = observer(() => {
     const dispatch = useDispatch();
     const [isAuth, setAuth] = useState(false);
     const { user } = useContext(Context)
+    const [role, setRole] = useState(null);
 
     const handleFormClick = () => {
         if (inputRef.current) {
@@ -49,6 +50,7 @@ const NavBar = observer(() => {
         user.setUser({})
         user.setIsAuth(false)
         setAuth(false);
+        setRole(null)
     }
 
     useEffect(() => {
@@ -77,6 +79,7 @@ const NavBar = observer(() => {
 
     if (user?.isAuth && !isAuth) {
         setAuth(true);
+        setRole(user.user.role)
     }
 
     if (loading) {
@@ -115,6 +118,11 @@ const NavBar = observer(() => {
                                 <Nav.Link href="/basket" >
                                     Basket
                                 </Nav.Link>
+                                {role === "ADMIN" &&
+                                    <Nav.Link href="/admin" >
+                                        Admin
+                                    </Nav.Link>
+                                }
                                 <CustomButton onClick={logOut} styles={{ padding: '0px 10px' }} content={'Log out'}></CustomButton>
                             </>
                             :

@@ -69,8 +69,6 @@ const ItemPage = () => {
     }
   }
 
-  console.log(infoItem)
-
 
   useEffect(() => {
     if (id) {

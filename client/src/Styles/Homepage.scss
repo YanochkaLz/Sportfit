@@ -32,6 +32,18 @@
                 font-size: 64px;
             }
         }
+
+        &-items {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                display: flex;
+                align-items: center;
+                margin: 0 auto;
+            }
+        }
     }
 
     .bestseller {
@@ -106,6 +118,7 @@
     .trend {
         margin: 0px 50px;
         margin-top: 100px;
+        position: relative;
 
         &-container {
             font-size: 65px;
@@ -116,10 +129,41 @@
             height: 300px;
             background-color: #A04955;
         }
+
+        &-list {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 150px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 150px;
+
+            &_item {
+                background-color: white;
+                border: 1px solid #A04955;
+                width: 350px;
+                text-align: center;
+                padding: 20px 0;
+
+                h3 {
+                    font-size: 24px;
+                    font-family: 'Oswald-Regular';
+                    margin: 20px 0;
+                }
+
+                img {
+                    height: 200px;
+                }
+            }
+        }
     }
 
     .legacy {
-        margin: 240px 8%;
+        margin: 0 8%;
+        margin-top: 420px;
+        margin-bottom: 120px;
         position: relative;
 
         &-container {

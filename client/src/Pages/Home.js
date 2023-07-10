@@ -6,15 +6,35 @@ import manImg3 from "../Assets/image/homepage/man3.png"
 import yearsImg from "../Assets/image/homepage/50years.png"
 import walkingImg from "../Assets/image/homepage/walking-bg.jpg"
 import pantsImg from "../Assets/image/homepage/pants-image.png"
+import beltsImg from "../Assets/image/homepage/belts.png"
+import tiesImg from "../Assets/image/homepage/ties.webp"
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
 import CustomButton from '../Components/Button/CustomButton';
+import { useNavigate } from 'react-router-dom'
+import { getItems } from '../API/items';
+import CardItem from '../Components/CardItem';
+
+const idItems = []
 
 const Home = () => {
   const [heightWindow, setHeightWindow] = useState(null);
+  const nav = useNavigate();
+  const [someItems, setSomeItems] = useState(null);
+
+  const gettingSomeItems = async () => {
+    try {
+      const responseShorts = await getItems(1, 1, 2);
+      const responsePants = await getItems(2, 1, 2);
+      setSomeItems({ pants: responsePants.rows, shorts: responseShorts.rows });
+    } catch (e) {
+      alert(e.response)
+    }
+  }
 
   useEffect(() => {
     setHeightWindow(window.innerHeight);
+    gettingSomeItems()
   }, [])
 
   return (
@@ -24,7 +44,7 @@ const Home = () => {
           <div className='greeting-left'>
             <h2 className='main-title'>BEST SELLING <br></br> STRETCH SHORTS</h2>
             <p className='main-text'>Get the perfect fit with 6 different inseam lengths.</p>
-            <Button className='main-button' variant="outline-dark">SHOP ALL SHORTS</Button>
+            <Button onClick={() => nav('/shop/1')} className='main-button' variant="outline-dark">SHOP ALL SHORTS</Button>
           </div>
           <div className='greeting-right'>
             <div style={{ position: 'relative' }}>
@@ -42,6 +62,13 @@ const Home = () => {
             <h3>TGIF, INLET, AND MARCHAL'S COLLECTIONS</h3>
             <h2>NOW 40% OFF!</h2>
           </div>
+          {someItems &&
+            <div className='sales-items'>
+              {someItems.shorts.map(item => <CardItem onClick={() => nav('/item/' + item.id)} key={item.id} item={item} />)}
+              {someItems.pants.map(item => <CardItem onClick={() => nav('/item/' + item.id)} key={item.id} item={item} />)}
+            </div> 
+          }
+
         </Container>
       </section>
 
@@ -56,7 +83,7 @@ const Home = () => {
             <div className='bestseller-right'>
               <h2 className='main-title'>OUR BESTSELLING <br></br> PANTS</h2>
               <p className='main-text'>Our classic cargo pants are built to last and designed to exceed your expectations! From Frequent Traveler to Hatteras to Trinidad, we have the perfect fit for you!</p>
-              <Button className='main-button' variant="outline-dark">SHOP ALL SHORTS</Button>
+              <Button onClick={() => nav('/shop/2')} className='main-button' variant="outline-dark">SHOP ALL PANTS</Button>
             </div>
           </div>
         </Container>
@@ -91,13 +118,25 @@ const Home = () => {
           <Container>
             <div className='main-title' style={{ color: 'white' }}>SPORTIF <br></br> ORIGINAL PANT</div>
             <div className='main-text' style={{ color: 'white' }}>Our classic nautical cargo pants are built to last and designed to exceed your expectations! Crafted from our stretch twill blend that offers the comfort of cotton, the wrinkle resistance of polyester and the mobility of Lycra®.</div>
-            <CustomButton styles={{fontSize: '24px'}} content={'SHOP SPORTIF ORIGINAL PANT'}/>
+            <CustomButton styles={{ fontSize: '24px' }} content={'SHOP SPORTIF ORIGINAL PANT'} />
           </Container>
         </div>
       </section>
 
       <section className='trend'>
         <div className='trend-container'>STAY IN TREND WITH SPORTIF</div>
+        <div className='trend-list'>
+          <div className='trend-list_item'>
+            <img src={beltsImg} alt='Belts'/>
+            <h3>Don't Forget a Belt!</h3>
+            <CustomButton onClick={() => nav('/shop/4')} styles={{ fontSize: '24px' }} content={'SHOP ALL BELTS'} />
+          </div>
+          <div className='trend-list_item'>
+            <img src={tiesImg} alt='Belts'/>
+            <h3>Shop Newest Ties!</h3>
+            <CustomButton onClick={() => nav('/shop/4')} styles={{ fontSize: '24px' }} content={'SHOP ALL Ties'} />
+          </div>
+        </div>
       </section>
 
       <section className='legacy'>
