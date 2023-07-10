@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -12,15 +12,44 @@ import { getTypes } from '../API/type';
 import { getItems } from '../API/items';
 import { useDispatch } from 'react-redux';
 import { setStoreTypes } from '../features/typesSlice';
+import { Context } from '../index'
+import CustomButton from './Button/CustomButton';
+import { observer } from 'mobx-react-lite';
 
 
-const NavBar = () => {
+const NavBar = observer(() => {
     const inputRef = useRef(null);
     const [loading, setLoading] = useState(false);
     const [types, setTypes] = useState(null);
     const [items, setItems] = useState(null);
     const [searchingItems, setSearchingItems] = useState(null)
     const dispatch = useDispatch();
+    const [isAuth, setAuth] = useState(false);
+    const { user } = useContext(Context)
+
+    const handleFormClick = () => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    };
+
+    const handleSearchItem = (name) => {
+        if (!name) {
+            setSearchingItems(null)
+        }
+        else if (items && items?.length) {
+            const finder = items.filter(item => item.name.includes(name))
+            if (finder?.length) setSearchingItems(finder)
+            else setSearchingItems(null)
+        }
+    }
+
+    const logOut = () => {
+        localStorage.removeItem("jwtToken");
+        user.setUser({})
+        user.setIsAuth(false)
+        setAuth(false);
+    }
 
     useEffect(() => {
         try {
@@ -46,22 +75,8 @@ const NavBar = () => {
         }
     }, [types, items])
 
-
-    const handleFormClick = () => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
-    };
-
-    const handleSearchItem = (name) => {
-        if (!name) {
-            setSearchingItems(null)
-        }
-        else if (items && items?.length) {
-            const finder = items.filter(item => item.name.includes(name))
-            if (finder?.length) setSearchingItems(finder)
-            else setSearchingItems(null)
-        }
+    if (user?.isAuth && !isAuth) {
+        setAuth(true);
     }
 
     if (loading) {
@@ -94,6 +109,20 @@ const NavBar = () => {
                         <Nav.Link href="/" >
                             Sale
                         </Nav.Link>
+
+                        {isAuth ?
+                            <>
+                                <Nav.Link href="/basket" >
+                                    Basket
+                                </Nav.Link>
+                                <CustomButton onClick={logOut} styles={{ padding: '0px 10px' }} content={'Log out'}></CustomButton>
+                            </>
+                            :
+                            <Nav.Link href="/login" >
+                                Login
+                            </Nav.Link>
+                        }
+
                     </Nav>
                     <Form onClick={handleFormClick} className='input-border'>
                         <img alt='Search' src={searchImg} />
@@ -102,7 +131,11 @@ const NavBar = () => {
                             <ul className='popUpWindow'>
                                 {
                                     searchingItems?.map(item =>
-                                        <li key={item.id}>{item.name}</li>
+                                        <li key={item.id}>
+                                            <Nav.Link href={`/item/${item.id}`} >
+                                                {item.name}
+                                            </Nav.Link>
+                                        </li>
                                     )
                                 }
                             </ul>
@@ -113,6 +146,6 @@ const NavBar = () => {
             </Container>
         </Navbar>
     )
-}
+})
 
 export default NavBar
