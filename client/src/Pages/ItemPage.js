@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { Children, useContext, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import { getItem } from '../API/items'
 import "../Styles/Item.scss"
 import SpinnerComponent from '../Components/SpinnerComponent';
@@ -21,7 +21,7 @@ const ContentButton = () => {
   return (
     <>
       <img alt="Bag" src={bagImg} />
-      ADD TO BAG
+      ADD TO BASKET
     </>
   )
 }
@@ -30,9 +30,10 @@ const ItemPage = () => {
   const { id } = useParams();
   const [currentItem, setCurrentItem] = useState(null);
   const [currentSize, setCurrentSize] = useState(null);
-  const [infoItem, setInfoItem] = useState(null)
-  const { user } = useContext(Context)
-
+  const [infoItem, setInfoItem] = useState(null);
+  const [isAlert, setAlert] = useState(false)
+  const { user } = useContext(Context);
+  const nav = useNavigate();
 
   const handleGetOneItem = async (id) => {
     try {
@@ -66,6 +67,31 @@ const ItemPage = () => {
       }
     } catch (e) {
       console.log(e)
+    }
+  }
+
+  const handleAddToBasket = () => {
+    if (!user.isAuth) {
+      nav('/login')
+    } else {
+      if (!currentSize && currentItem.typeId !== 4) {
+        setAlert(true)
+      } else {
+        const basket = JSON.parse(localStorage.getItem("basket"));
+        if (!basket) {
+          const data = { items: [{ itemId: currentItem.id, size: currentSize, img: currentItem.img, name: currentItem.name, price: currentItem.price }] }
+          localStorage.setItem("basket", JSON.stringify(data));
+        } else {
+          const { items } = basket
+          const existingItem = items.find(item => item.itemId === currentItem.id && item.size === currentSize)
+          if (!existingItem) {
+            items.push({ itemId: currentItem.id, size: currentSize, img: currentItem.img, name: currentItem.name, price: currentItem.price })
+            localStorage.setItem("basket", JSON.stringify({ items: items }));
+          }
+        }
+
+        nav('/basket')
+      }
     }
   }
 
@@ -103,7 +129,7 @@ const ItemPage = () => {
                 {infoItem &&
                   <>
                     <div style={{ marginLeft: '60px' }} className='item-rating'>rate this item:<br></br><StarsGroup onClick={(e) => handleChangeRatingItem(e)} rating={infoItem.rating} /></div>
-                    <div style={{ marginLeft: '60px', fontSize: '15px', textTransform:'uppercase', fontFamily: 'Oswald-Regular' }}>{infoItem.count} REVIEWS</div>
+                    <div style={{ marginLeft: '60px', fontSize: '15px', textTransform: 'uppercase', fontFamily: 'Oswald-Regular' }}>{infoItem.count} REVIEWS</div>
                   </>
                 }
               </div> :
@@ -113,22 +139,35 @@ const ItemPage = () => {
               </>
             }
             <p className='item-price'><span>As low as <br></br></span>${currentItem.price}</p>
-            <div className='item-sizes'>
-              {currentItem?.itemSizes?.length &&
-                <>
-                  <h3>size:</h3>
-                  <div className='item-sizes_container'>
-                    {currentItem.itemSizes.sort().map(size => <Button active={size === +currentSize} onClick={e => setCurrentSize(e.target.value)} value={size} key={size}>{size}</Button>)}
-                  </div>
-                </>
-              }
-            </div>
-            <CustomButton styles={{ display: 'flex', alignItems: 'center', gap: '15px', color: 'white', fontSize: '24px', fontFamily: 'Oswald-Regular' }} content={<ContentButton />} />
+
+            {currentItem.typeId !== 4 &&
+              <div className='item-sizes'>
+                {currentItem?.itemSizes?.length &&
+                  <>
+                    <h3>size:</h3>
+                    <div className='item-sizes_container'>
+                      {currentItem.itemSizes.sort().map(size => <Button active={size === +currentSize} onClick={e => { setCurrentSize(e.target.value); setAlert(false) }} value={size} key={size}>{size}</Button>)}
+                      {isAlert && <div style={{ color: '#A04955', fontFamily: 'Oswald-Medium' }}>Choose a size!</div>}
+                    </div>
+                  </>
+                }
+              </div>
+            }
+
+            <CustomButton onClick={handleAddToBasket} styles={{ display: 'flex', alignItems: 'center', gap: '15px', color: 'white', fontSize: '24px', fontFamily: 'Oswald-Regular' }} content={<ContentButton />} />
             <div className='item-socials'>
-              <img alt='social' src={facebookImg} />
-              <img alt='social' src={twitterImg} />
-              <img alt='social' src={pinterestImg} />
-              <img alt='social' src={linkImg} />
+              <a target='_blank' href='https://facebook.com'>
+                <img alt='social' src={facebookImg} />
+              </a>
+              <a target='_blank' href='https://twitter.com'>
+                <img alt='social' src={twitterImg} />
+              </a>
+              <a target='_blank' href='https://pinterest.com'>
+                <img alt='social' src={pinterestImg} />
+              </a>
+              <a target='_blank' href=''>
+                <img alt='social' src={linkImg} />
+              </a>
             </div>
           </div>
         </div>

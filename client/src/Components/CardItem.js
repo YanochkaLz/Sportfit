@@ -11,7 +11,7 @@ const ContentButton = () => {
   return (
     <>
       <img alt="Bag" src={bagImg} />
-      Add to Cart
+      Add to Basket
     </>
   )
 }

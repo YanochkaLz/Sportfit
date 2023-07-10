@@ -1,18 +1,20 @@
+hr {
+    color: #A04955 !important;
+    border-top: 2px solid !important;
+}
+
+.auth-title {
+    margin-top: 30px;
+    font-size: 60px;
+    text-align: center;
+    font-family: 'Oswald-Medium';
+    color: #333 !important;
+}
+
 .auth {
     min-height: 80vh;
-    padding-top: 30px;
     padding-bottom: 100px;
-
-    &-title {
-        font-size: 60px;
-        text-align: center;
-        font-family: 'Oswald-Medium';
-    }
-
-    hr {
-        color: #A04955;
-        border-top: 2px solid;
-    }
+    color: #333 !important;
 
     form {
         font-family: 'Oswald-Regular';
