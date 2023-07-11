@@ -3,19 +3,26 @@ import "../Styles/Basket.scss";
 import { Container } from 'react-bootstrap';
 import { apiUrl } from '../Config/serverAPI';
 import binImg from '../Assets/image/basket/bin.svg'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import CustomButton from '../Components/Button/CustomButton';
+import { Context } from "../index"
+import { createBasket } from '../API/basket';
 
 const Basket = () => {
   const [basketItems, setBasketItems] = useState(null);
   const [isChanged, setChanged] = useState(null);
   const [amoutState, setAmountState] = useState(1);
   const [totalPrice, setTotalPrice] = useState(null);
+  const [isModal, setModal] = useState(false);
+  const { user } = useContext(Context);
+
+
 
   const handleDeleteItem = (item) => {
     const newItems = basketItems.filter(elem => elem.size !== item.size || elem.itemId !== item.itemId);
     setBasketItems(newItems)
     const localItems = JSON.parse(localStorage.getItem("basket"));
-    console.log(newItems, localItems)
     if (localItems?.items) {
       const newLocalItems = localItems.items.filter(elem => elem.size !== item.size || elem.itemId !== item.itemId)
       localStorage.setItem("basket", JSON.stringify({ items: newLocalItems }));
@@ -39,6 +46,24 @@ const Basket = () => {
     }
   }
 
+  const handleMakeOrder = async () => {
+    const items = basketItems.map(item => ({ itemId: item.itemId, name: item.name, size: item.size, count: item.count }))
+
+    if (items && user?._user?.id && totalPrice) {
+      const data = { items: { arr: items }, userId: user._user.id, totalAmount: parseFloat(totalPrice) }
+      try {
+        const response = await createBasket(data);
+        if(response) {
+          setBasketItems(null);
+          setTotalPrice(null)
+          localStorage.removeItem('basket');
+        }
+      } catch (e) {
+        alert(e.response)
+      }
+    }
+  }
+
   useEffect(() => {
     const localItems = JSON.parse(localStorage.getItem("basket"));
     if (localItems?.items) {
@@ -49,9 +74,10 @@ const Basket = () => {
 
 
   useEffect(() => {
-    if(basketItems) {
-      const suma = basketItems.reduce((sum, cur) => sum + cur.price*cur.count, 0)
-      setTotalPrice(suma)
+    if (basketItems) {
+      const suma = basketItems.reduce((sum, cur) => sum + (cur.price * cur.count), 0)
+
+      setTotalPrice(suma.toFixed(2))
     }
   }, [basketItems])
 
@@ -93,9 +119,24 @@ const Basket = () => {
             </div>
 
             <div className='basket-bottom'>
-              <p style={{margin: 0}}>Total: {totalPrice && totalPrice} $</p>
-              <CustomButton styles={{ fontFamily: 'Oswald-Medium', fontSize: '40px' }} content={'Make an order'} />
+              <p style={{ margin: 0 }}>Total: {totalPrice && totalPrice} $</p>
+              <CustomButton onClick={() => setModal(true)} styles={{ fontFamily: 'Oswald-Medium', fontSize: '40px' }} content={'Make an order'} />
             </div>
+
+            <Modal show={isModal} onHide={() => setModal(false)} animation={false}>
+              <Modal.Body style={{ fontSize: '30px' }}>Your order is in the amount of {totalPrice && totalPrice} $. Would you like to confirm?</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={() => setModal(false)}>
+                  Close
+                </Button>
+                <Button variant="success" onClick={() => {
+                  setModal(false)
+                  handleMakeOrder()
+                }}>
+                  Сonfirm
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
           :
           <p className='basket-empty'>Basket is empty!</p>

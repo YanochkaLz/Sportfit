@@ -12,3 +12,5 @@ export const getAllItemsUrl = apiUrl + "/api/item";
 export const getOneItemUrl = apiUrl + "/api/item";
 
 export const createRatingUrl = apiUrl + "/api/rating";
+
+export const createBasketUrl = apiUrl + "/api/basket";

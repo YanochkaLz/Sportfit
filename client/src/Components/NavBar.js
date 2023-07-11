@@ -15,6 +15,8 @@ import { setStoreTypes } from '../features/typesSlice';
 import { Context } from '../index'
 import CustomButton from './Button/CustomButton';
 import { observer } from 'mobx-react-lite';
+import { getBasket } from '../API/basket';
+import { setOrdersState } from '../features/ordersSlice';
 
 
 const NavBar = observer(() => {
@@ -27,6 +29,8 @@ const NavBar = observer(() => {
     const [isAuth, setAuth] = useState(false);
     const { user } = useContext(Context)
     const [role, setRole] = useState(null);
+
+    const [hasOrders, setOrders] = useState(null);
 
     const handleFormClick = () => {
         if (inputRef.current) {
@@ -53,6 +57,18 @@ const NavBar = observer(() => {
         setRole(null)
     }
 
+    const handleGetOrder = async (id) => {
+        try {
+            const response = await getBasket(+id);
+            if (response) {
+                setOrders(response);
+                dispatch(setOrdersState(response));
+            }
+        } catch (e) {
+            alert(e)
+        }
+    }
+
     useEffect(() => {
         try {
             getTypes().then(data => {
@@ -67,7 +83,7 @@ const NavBar = observer(() => {
                 }
             })
         } catch (e) {
-            alert(e.response.data.message)
+            alert(e.response)
         }
     }, [dispatch])
 
@@ -77,9 +93,13 @@ const NavBar = observer(() => {
         }
     }, [types, items])
 
+
     if (user?.isAuth && !isAuth) {
         setAuth(true);
         setRole(user.user.role)
+        if (user.user.id) {
+            handleGetOrder(user.user.id)
+        }
     }
 
     if (loading) {
@@ -97,8 +117,8 @@ const NavBar = observer(() => {
                     </Nav.Link>
 
 
-                    {user._user.name && <div style={{textTransform: 'capitalize', fontSize: '23px'}}>Hello, {user._user.name}!</div>}
-                    
+                    {user._user.name && <div style={{ textTransform: 'capitalize', fontSize: '23px' }}>Hello, {user._user.name}!</div>}
+
                     <Form onClick={handleFormClick} className='input-border'>
                         <img alt='Search' src={searchImg} />
                         <input onChange={e => handleSearchItem(e.target.value)} ref={inputRef} autoComplete='off' className='inputStyling' type='text' name='search' placeholder='SEARCH ENTIRE STORE HERE' />
@@ -139,9 +159,17 @@ const NavBar = observer(() => {
 
                         {isAuth ?
                             <>
-                                <Nav.Link href="/basket" >
-                                    Basket
-                                </Nav.Link>
+                                {hasOrders ?
+                                    <Nav.Link href="/orders" >
+                                        Orders
+                                    </Nav.Link>
+                                    :
+                                    <Nav.Link href="/basket" >
+                                        Basket
+                                    </Nav.Link>
+                                }
+
+
                                 {role === "ADMIN" &&
                                     <Nav.Link href="/admin" >
                                         Admin

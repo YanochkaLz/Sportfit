@@ -3,6 +3,7 @@ import Auth from "../Pages/Auth"
 import Basket from "../Pages/Basket"
 import Home from "../Pages/Home"
 import ItemPage from "../Pages/ItemPage"
+import Orders from "../Pages/Orders"
 import Shop from "../Pages/Shop"
 
 export const authRoutes = [
@@ -13,7 +14,11 @@ export const authRoutes = [
     {
         path: '/basket',
         Component: <Basket/>
-    }
+    },
+    {
+        path: '/orders',
+        Component: <Orders/>
+    },
 ]
 
 export const publicRoutes = [

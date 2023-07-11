@@ -34,7 +34,8 @@ const Rating = sequelize.define('rating', {
 
 const Basket = sequelize.define('basket', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    itemsId: { type: DataTypes.JSON},
+    items: { type: DataTypes.JSON},
+    totalAmount: { type: DataTypes.DOUBLE}
 })
 
 User.hasOne(Basket);
