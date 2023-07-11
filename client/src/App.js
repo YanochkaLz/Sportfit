@@ -14,12 +14,15 @@ const App = observer(() => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let error = false;
     check().then(data => {
       if (data) {
         user.setUser(data)
         user.setIsAuth(true)
       }
-    }).finally(() => setLoading(false))
+    }).catch(e => error = true).finally(() => {
+      if(!error) setLoading(false)
+    })
   }, [user])
 
   if (loading) {

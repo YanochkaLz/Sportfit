@@ -12,7 +12,7 @@ class UserController {
     async registration(req, res, next) {
         const { name, phone, email, password, role } = req.body
         if (!email || !password || !phone || !name) {
-            return next(ApiError.badRequest('Введены не все данные'))
+            return next(ApiError.badRequest('Not all data has been entered!'))
         }
         const candidate = await User.findOne({
             where: {
@@ -23,11 +23,10 @@ class UserController {
             }
         })
         if (candidate) {
-            return next(ApiError.badRequest('Пользователь с таким email или телефоном уже существует'))
+            return next(ApiError.badRequest('User with this email or phone number already exists!'))
         }
         const hashPassword = await bcrypt.hash(password, 5)
         const user = await User.create({ name, phone, email, role, password: hashPassword })
-        // const basket = await Basket.create({ userId: user.id })
         const token = generateJwt(user.id, user.email, user.name, user.role)
         return res.json({ token })
     }
@@ -36,13 +35,13 @@ class UserController {
         const { email, password } = req.body
         const user = await User.findOne({ where: { email } })
         if (!user) {
-            return next(ApiError.badRequest('Пользователь с таким email не существует'))
+            return next(ApiError.badRequest('User with this email does not exist!'))
         }
 
         // decode and compare password from client and data base
         let comparePassword = bcrypt.compareSync(password, user.password)
         if (!comparePassword) {
-            return next(ApiError.badRequest('Указан неверный пароль'))
+            return next(ApiError.badRequest('Incorrect password!'))
         }
         const token = generateJwt(user.id, user.email, user.name, user.role)
         return res.json({ token })

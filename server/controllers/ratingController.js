@@ -13,7 +13,7 @@ class RatingController {
             let avarage = 0;
 
             if (!item) {
-                return next(ApiError.badRequest('Товар не найден!'));
+                return next(ApiError.badRequest('Item not found!'));
             }
 
             if (sameRating) {

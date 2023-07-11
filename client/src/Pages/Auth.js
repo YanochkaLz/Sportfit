@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -16,6 +16,7 @@ const Auth = () => {
     const { user } = useContext(Context)
     const location = useLocation();
     const isLogin = location.pathname === '/login';
+    const [userNotAuth, setUserNotAuth] = useState(false);
     const history = useNavigate();
     const {
         register,
@@ -44,11 +45,16 @@ const Auth = () => {
                 history('/')
             }
         } catch (e) {
-            alert(e.response.data.message)
+            if(e.response.status === 404) {
+                setUserNotAuth(e.response.data.message);
+            }
+            else {
+                alert(e.response.data.message)
+            }
         }
     }
 
-    const AlertMessage = ({ text }) => <Alert style={{ fontSize: '16px' }} className='mt-1 mb-0 p-2 d-inline-block' variant="danger">{text}</Alert>
+    const AlertMessage = ({ text }) => <Alert className='mt-2 mb-0 p-2 d-inline-block' variant="danger">{text}</Alert>
     const PasswordError = () => {
         return (
             <ul style={{ margin: 0, padding: 0, listStylePosition: 'inside' }}>
@@ -161,6 +167,7 @@ const Auth = () => {
                         <Button className='mt-3' variant="primary" disabled={!isValid} type="submit">
                             Submit
                         </Button>
+                        {userNotAuth && <AlertMessage text={userNotAuth}/>}
                     </Form>
                 </div>
             </Container>

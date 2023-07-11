@@ -90,11 +90,35 @@ const NavBar = observer(() => {
 
     return (
         <Navbar id='navbar'>
-            <Container>
-                <Nav.Link className='logoNavbar' href="/">
-                    <img src={logoImg} alt='Logo' />
-                </Nav.Link>
-                <Navbar.Collapse id="navbarScroll" style={{ justifyContent: 'space-between', }}>
+            <Container style={{ flexDirection: 'column' }}>
+                <div className='nav-menu' style={{ paddingBottom: '20px' }}>
+                    <Nav.Link className='logoNavbar' href="/">
+                        <img src={logoImg} alt='Logo' />
+                    </Nav.Link>
+
+
+                    {user._user.name && <div style={{textTransform: 'capitalize', fontSize: '23px'}}>Hello, {user._user.name}!</div>}
+                    
+                    <Form onClick={handleFormClick} className='input-border'>
+                        <img alt='Search' src={searchImg} />
+                        <input onChange={e => handleSearchItem(e.target.value)} ref={inputRef} autoComplete='off' className='inputStyling' type='text' name='search' placeholder='SEARCH ENTIRE STORE HERE' />
+                        {searchingItems?.length &&
+                            <ul className='popUpWindow'>
+                                {
+                                    searchingItems?.map(item =>
+                                        <li key={item.id}>
+                                            <Nav.Link href={`/item/${item.id}`} >
+                                                {item.name}
+                                            </Nav.Link>
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                        }
+
+                    </Form>
+                </div>
+                <div className='nav-menu'>
                     <Nav
                         style={{ maxHeight: '100px', gap: '10px' }}
                         navbarScroll
@@ -109,7 +133,7 @@ const NavBar = observer(() => {
                                 </Nav.Link>
                             )}
                         </NavDropdown>
-                        <Nav.Link href="/" >
+                        <Nav.Link href="/#sales" >
                             Sale
                         </Nav.Link>
 
@@ -132,25 +156,8 @@ const NavBar = observer(() => {
                         }
 
                     </Nav>
-                    <Form onClick={handleFormClick} className='input-border'>
-                        <img alt='Search' src={searchImg} />
-                        <input onChange={e => handleSearchItem(e.target.value)} ref={inputRef} autoComplete='off' className='inputStyling' type='text' name='search' placeholder='SEARCH ENTIRE STORE HERE' />
-                        {searchingItems?.length &&
-                            <ul className='popUpWindow'>
-                                {
-                                    searchingItems?.map(item =>
-                                        <li key={item.id}>
-                                            <Nav.Link href={`/item/${item.id}`} >
-                                                {item.name}
-                                            </Nav.Link>
-                                        </li>
-                                    )
-                                }
-                            </ul>
-                        }
+                </div>
 
-                    </Form>
-                </Navbar.Collapse>
             </Container>
         </Navbar>
     )

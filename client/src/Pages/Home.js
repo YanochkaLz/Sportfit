@@ -56,7 +56,7 @@ const Home = () => {
         </section>
       </Container>
 
-      <section className='sales'>
+      <section id='sales' className='sales'>
         <Container>
           <div className='sales-title'>
             <h3>TGIF, INLET, AND MARCHAL'S COLLECTIONS</h3>

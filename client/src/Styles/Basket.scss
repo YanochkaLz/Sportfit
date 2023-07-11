@@ -2,6 +2,7 @@
     min-height: 80vh;
     color: #333 !important;
     padding-bottom: 150px;
+    padding-top: 30px;
 
     &-bottom {
         display: flex;
@@ -18,19 +19,11 @@
         color: #A04955;
         border-top: 2px solid;
     }
-
-    h2,
+    
     h1 {
         text-align: center;
-    }
-
-    h2 {
-        font-size: 30px;
-    }
-
-    h1 {
         font-family: 'Oswald-Medium';
-        font-size: 60px;
+        font-size: 50px;
         margin-top: 15px;
         padding-bottom: 10px;
     }
@@ -60,6 +53,7 @@
 
             .item-img {
                 font-size: 40px;
+
                 img {
                     height: 250px;
                 }

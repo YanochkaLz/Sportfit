@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "../Styles/Basket.scss";
-import { Context } from "../index"
 import { Container } from 'react-bootstrap';
 import { apiUrl } from '../Config/serverAPI';
 import binImg from '../Assets/image/basket/bin.svg'
 import CustomButton from '../Components/Button/CustomButton';
 
 const Basket = () => {
-  const { user } = useContext(Context);
   const [basketItems, setBasketItems] = useState(null);
   const [isChanged, setChanged] = useState(null);
   const [amoutState, setAmountState] = useState(1);
@@ -59,10 +57,7 @@ const Basket = () => {
 
   return (
     <div className='basket'>
-      <h2>
-        Hello{user._user.name && `, ${user._user.name}!`}
-      </h2>
-      <h1>Your Basket</h1>
+      <h1>Your Basket:</h1>
       <hr></hr>
       <Container>
         {basketItems?.length ?
