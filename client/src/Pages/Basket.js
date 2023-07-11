@@ -8,17 +8,37 @@ import CustomButton from '../Components/Button/CustomButton';
 
 const Basket = () => {
   const { user } = useContext(Context);
-  const [basketItems, setBasketItems] = useState(null)
-
-
-  console.log(basketItems)
+  const [basketItems, setBasketItems] = useState(null);
+  const [isChanged, setChanged] = useState(null);
+  const [amoutState, setAmountState] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(null);
 
   const handleDeleteItem = (item) => {
-    // setBasketItems(prev => prev.filter(elem => elem.id !== item.id && elem.size !== item.size))
-    // const localItems = JSON.parse(localStorage.getItem("basket"));
-    // if (localItems?.items) {
-    //   // const newItems = localItems.items.filter(elem)
-    // }
+    const newItems = basketItems.filter(elem => elem.size !== item.size || elem.itemId !== item.itemId);
+    setBasketItems(newItems)
+    const localItems = JSON.parse(localStorage.getItem("basket"));
+    console.log(newItems, localItems)
+    if (localItems?.items) {
+      const newLocalItems = localItems.items.filter(elem => elem.size !== item.size || elem.itemId !== item.itemId)
+      localStorage.setItem("basket", JSON.stringify({ items: newLocalItems }));
+    }
+  }
+
+  const handleChangeAmount = (index) => {
+    if (isChanged) {
+      if (amoutState <= 50 && amoutState > 0 && +amoutState === Math.round(+amoutState)) {
+        setBasketItems(prev => prev.map((elem, i) => {
+          if (index === ++i) {
+            elem.count = +amoutState;
+          }
+          return elem;
+        }))
+        setChanged(null)
+        setAmountState(1)
+      }
+    } else {
+      setChanged({ status: true, id: index })
+    }
   }
 
   useEffect(() => {
@@ -29,6 +49,13 @@ const Basket = () => {
     }
   }, [])
 
+
+  useEffect(() => {
+    if(basketItems) {
+      const suma = basketItems.reduce((sum, cur) => sum + cur.price*cur.count, 0)
+      setTotalPrice(suma)
+    }
+  }, [basketItems])
 
   return (
     <div className='basket'>
@@ -54,7 +81,11 @@ const Basket = () => {
                       {item?.size &&
                         <p>Size: {item.size}</p>
                       }
-                      <p>Amount: {item.count}</p>
+                      <p className='d-flex align-items-center gap-3'>
+                        Amount: {item.count}
+                        {isChanged?.status && index === isChanged?.id && <input style={{ height: '36px', fontSize: '22px', maxWidth: '60px' }} onChange={e => setAmountState(e.target.value)} value={amoutState} type='number' />}
+                        <CustomButton onClick={() => handleChangeAmount(index)} styles={{ padding: '3px 8px', backgroundColor: '#CD9431' }} content={'Change amount'}></CustomButton>
+                      </p>
                       <p>Price: {item.price * item.count}$</p>
                     </div>
                   </div>
@@ -67,8 +98,8 @@ const Basket = () => {
             </div>
 
             <div className='basket-bottom'>
-              <p>Total: </p>
-              <CustomButton styles={{fontFamily: 'Oswald-Medium', fontSize: '40px'}} content={'Make an order'}/>
+              <p style={{margin: 0}}>Total: {totalPrice && totalPrice} $</p>
+              <CustomButton styles={{ fontFamily: 'Oswald-Medium', fontSize: '40px' }} content={'Make an order'} />
             </div>
           </div>
           :
