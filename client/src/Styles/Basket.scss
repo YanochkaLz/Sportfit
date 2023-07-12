@@ -1,0 +1,89 @@
+.basket {
+    min-height: 80vh;
+    color: #333 !important;
+    padding-bottom: 150px;
+    padding-top: 30px;
+
+    &-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        p {
+            font-size: 60px;
+            font-family: 'Oswald-Medium';
+        }
+    }
+
+    hr {
+        color: #A04955;
+        border-top: 2px solid;
+    }
+    
+    h1 {
+        text-align: center;
+        font-family: 'Oswald-Medium';
+        font-size: 50px;
+        margin-top: 15px;
+        padding-bottom: 10px;
+    }
+
+    &-empty {
+        font-size: 40px;
+        text-align: center;
+        margin-top: 100px;
+        font-family: 'Oswald-Light';
+    }
+
+    &-list {
+        margin-top: 50px;
+        margin-bottom: 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        &_item {
+            width: 100%;
+            padding: 20px 40px;
+            background-color: #f3f3f3;
+            border-radius: 20px;
+            border: 1px solid #A04955;
+            display: flex;
+            justify-content: space-between;
+
+            .item-img {
+                font-size: 40px;
+
+                img {
+                    height: 250px;
+                }
+            }
+
+            img {
+                transition: transform .2s ease;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            .item-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                &_title {
+                    font-family: 'Oswald-Medium';
+                }
+
+                &_text {
+                    font-size: 25px;
+                    display: flex;
+                    flex-direction: column;
+                    font-family: 'Oswald-Regular';
+                }
+            }
+
+        }
+    }
+}

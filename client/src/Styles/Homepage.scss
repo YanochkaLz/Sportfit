@@ -1,0 +1,213 @@
+#homePage {
+    .greeting {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-right {
+            height: 600px;
+            width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .sales {
+        padding: 80px 0;
+        position: relative;
+        background-color: #F1F1F1;
+
+        &-title {
+            color: #333;
+            text-align: center;
+            font-family: "Oswald-Medium";
+
+            h3 {
+                font-size: 36px;
+            }
+
+            h2 {
+                margin-top: 20px;
+                font-size: 64px;
+            }
+        }
+
+        &-items {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                display: flex;
+                align-items: center;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    .bestseller {
+        padding: 90px 0px;
+
+        &-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0 50px;
+        }
+
+        &-left {
+            height: 640px;
+            width: 660px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .announcements {
+        background-color: #F1F1F1;
+        padding: 107px 0px;
+
+        &-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 36px;
+        }
+
+        &-photo {
+            position: relative;
+        }
+
+        &-title {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            color: white;
+            font-family: "Oswald-Medium";
+            font-size: 36px;
+            padding: 17px;
+            background-color: #A04955;
+            opacity: .8;
+        }
+
+        &-block {
+            text-align: center;
+        }
+    }
+
+    .original {
+        position: relative;
+
+        &-container {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            padding: 40px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .trend {
+        margin: 0px 50px;
+        margin-top: 100px;
+        position: relative;
+
+        &-container {
+            font-size: 65px;
+            color: white;
+            font-family: "Oswald-Bold";
+            padding-top: 30px;
+            text-align: center;
+            height: 300px;
+            background-color: #A04955;
+        }
+
+        &-list {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 150px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 150px;
+
+            &_item {
+                background-color: white;
+                border: 1px solid #A04955;
+                width: 350px;
+                text-align: center;
+                padding: 20px 0;
+
+                h3 {
+                    font-size: 24px;
+                    font-family: 'Oswald-Regular';
+                    margin: 20px 0;
+                }
+
+                img {
+                    height: 200px;
+                }
+            }
+        }
+    }
+
+    .legacy {
+        margin: 0 8%;
+        margin-top: 420px;
+        margin-bottom: 120px;
+        position: relative;
+
+        &-container {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            top: -125px;
+        }
+
+        &-bg {
+            height: 430px;
+            background-color: #F3F3F3;
+            position: relative;
+            z-index: 0;
+        }
+    }
+
+    .main-title {
+        color: #001F3D;
+        font-size: 65px;
+        font-family: "Oswald-Bold";
+        line-height: 140%;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.693);
+    }
+
+    .main-text {
+        font-size: 24px;
+        color: black;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        max-width: 550px;
+    }
+
+    .main-button {
+        font-size: 24px;
+        padding: 8px 25px;
+    }
+
+    .border-img {
+        position: absolute;
+        height: 400px;
+        width: 450px;
+        z-index: -1;
+    }
+
+}

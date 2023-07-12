@@ -1,0 +1,12 @@
+#custom-btn {
+    gap: 10px;
+    text-transform: uppercase;
+    background-color: #A04955;
+    color: white;
+    padding: 5px 45px;
+    border: 0;
+    transition: opacity .5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    &:hover {
+        opacity: .7;
+    }
+}
