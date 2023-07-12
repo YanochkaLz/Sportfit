@@ -124,12 +124,12 @@ const ItemPage = () => {
           <div className='item-info'>
             <h1 className='item-title'>{currentItem.name} <span>item # {currentItem.id}</span></h1>
             {user?.isAuth ?
-              <div style={{ display: "flex", alignItems: 'center' }}>
+              <div className='itemRate' style={{ display: "flex", alignItems: 'center' }}>
                 <div className='item-blockedRating'>overall product rating: <br></br><StarsGroup rating={currentItem.rating} /></div>
                 {infoItem &&
                   <>
-                    <div style={{ marginLeft: '60px' }} className='item-rating'>rate this item:<br></br><StarsGroup onClick={(e) => handleChangeRatingItem(e)} rating={infoItem.rating} /></div>
-                    <div style={{ marginLeft: '60px', fontSize: '15px', textTransform: 'uppercase', fontFamily: 'Oswald-Regular' }}>{infoItem.count} REVIEWS</div>
+                    <div className='item-rating'>rate this item:<br></br><StarsGroup onClick={(e) => handleChangeRatingItem(e)} rating={infoItem.rating} /></div>
+                    <div style={{ fontSize: '15px', textTransform: 'uppercase', fontFamily: 'Oswald-Regular' }}>{infoItem.count} REVIEWS</div>
                   </>
                 }
               </div> :

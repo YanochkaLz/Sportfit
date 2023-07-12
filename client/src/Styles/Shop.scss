@@ -4,11 +4,12 @@
         align-items: center;
         padding-top: 30px;
         padding-bottom: 24px;
-        gap: 123px;
+        gap: 50px;
     }
 
     &-navigation {
         font-size: 24px;
+        width: fit-content !important;
 
         ol {
             margin: 0;
@@ -24,6 +25,10 @@
             }
         }
 
+        .breadcrumb {
+            flex-wrap: nowrap !important;
+        }
+
         .breadcrumb-item {
 
             text-transform: uppercase;
@@ -37,6 +42,7 @@
         .breadcrumb-item.active {
             color: black;
             font-family: 'Oswald-Medium';
+            display: flex;
 
             &::before {
                 content: '>';
@@ -49,7 +55,6 @@
 
     &-search {
         flex-grow: 1;
-
         input {
             font-family: 'Oswald-Medium';
             width: 100%;
@@ -74,6 +79,7 @@
 
         .gallery {
             display: flex;
+            gap: 30px;
 
             .sorting {
                 width: 20%;
@@ -145,8 +151,7 @@
             &-list {
                 width: 80%;
                 display: flex;
-                align-items: center;
-                justify-content: center;
+                justify-content: space-between;
                 flex-wrap: wrap;
                 gap: 50px;
 
@@ -172,6 +177,7 @@
         .pagination {
             margin-top: 50px;
             justify-content: flex-end !important;
+            flex-wrap: wrap;
             gap: 15px;
         }
 
@@ -206,5 +212,28 @@
             border-radius: 10px 0px 0px 10px;
         }
 
+    }
+}
+
+@media (max-width: 991px) {
+    .gallery {
+        &-list {
+            justify-content: center !important;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .gallery {
+        flex-direction: column;
+        > *{
+            width: 100% !important;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .shop-menu {
+        flex-direction: column;
     }
 }
