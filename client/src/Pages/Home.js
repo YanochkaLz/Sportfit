@@ -49,8 +49,8 @@ const Home = () => {
           <div className='greeting-right'>
             <div style={{ position: 'relative' }}>
               <img style={{ height: '500px' }} className='greeting-img' alt='Man1' src={manImg1} />
-              <div style={{ border: '1px solid #A04955', top: '150px', left: '-150px' }} className='border-img'></div>
-              <div style={{ backgroundColor: '#A04955', top: '-50px', left: '-30px' }} className='border-img'></div>
+              <div className='border-img custom-sqr1'></div>
+              <div className='border-img custom-sqr2'></div>
             </div>
           </div>
         </section>
@@ -116,7 +116,7 @@ const Home = () => {
         <img style={{ width: '100%' }} alt='Walking' src={walkingImg} />
         <div className='original-container'>
           <Container>
-            <div className='main-title' style={{ color: 'white' }}>SPORTIF <br></br> ORIGINAL PANT</div>
+            <div className='main-title' style={{ color: 'white' }}>SPORTIF ORIGINAL PANT</div>
             <div className='main-text' style={{ color: 'white' }}>Our classic nautical cargo pants are built to last and designed to exceed your expectations! Crafted from our stretch twill blend that offers the comfort of cotton, the wrinkle resistance of polyester and the mobility of Lycra®.</div>
             <CustomButton styles={{ fontSize: '24px' }} content={'SHOP SPORTIF ORIGINAL PANT'} />
           </Container>
@@ -124,7 +124,7 @@ const Home = () => {
       </section>
 
       <section className='trend'>
-        <div className='trend-container'>STAY IN TREND WITH SPORTIF</div>
+        <div className='trend-container main-title'>STAY IN TREND WITH SPORTIF</div>
         <div className='trend-list'>
           <div className='trend-list_item'>
             <img src={beltsImg} alt='Belts'/>

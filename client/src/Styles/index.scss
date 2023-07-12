@@ -23,6 +23,10 @@
     src: url('../Assets/fonts/Oswald-Regular.ttf');
 }
 
+html {
+    font-size: 20px;
+}
+
 body {
     font-family: 'OpenSans-Light';
 
@@ -39,6 +43,11 @@ body {
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
         background: linear-gradient(180deg, #001F3D, #A04955);
+    }
+
+    .container-2000 {
+        max-width: 2000px;
+        margin: 0 auto;
     }
 
 }

@@ -111,13 +111,13 @@ const NavBar = observer(() => {
     return (
         <Navbar id='navbar'>
             <Container style={{ flexDirection: 'column' }}>
-                <div className='nav-menu' style={{ paddingBottom: '20px' }}>
+                <div className='nav-menu nav-upper' style={{ paddingBottom: '20px' }}>
                     <Nav.Link className='logoNavbar' href="/">
                         <img src={logoImg} alt='Logo' />
                     </Nav.Link>
 
 
-                    {user._user.name && <div style={{ textTransform: 'capitalize', fontSize: '23px' }}>Hello, {user._user.name}!</div>}
+                    {user._user.name && <div className='user-name' style={{ textTransform: 'capitalize', fontSize: '23px' }}>Hello, {user._user.name}!</div>}
 
                     <Form onClick={handleFormClick} className='input-border'>
                         <img alt='Search' src={searchImg} />
