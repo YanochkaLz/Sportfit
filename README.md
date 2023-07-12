@@ -14,14 +14,14 @@ A database stores tables such as:
 API requests:
 - User registration
 - User login
-- Get user auth
+- Getting user auth
 - Creating a type of clothing
 - Getting all types
 - Creating a item
 - Getting all items
 - Getting one item
 - Creating an item rating 
-- Geting an item rating
+- Getting an item rating
 - Creating a basket
-- Get a user basket
+- Getting a user basket
 
