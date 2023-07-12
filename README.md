@@ -10,7 +10,6 @@ A database stores tables such as:
 
 ![Снимок экрана 2023-07-12 183520](https://github.com/YanochkaLz/Sportfit/assets/74237003/6c1db6d9-f618-4468-8575-347cbdd99202)
 
----
 
 API requests:
 - User registration
