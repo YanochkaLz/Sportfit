@@ -8,6 +8,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 30px;
+        flex-wrap: wrap;
 
         p {
             font-size: 60px;
@@ -19,7 +21,7 @@
         color: #A04955;
         border-top: 2px solid;
     }
-    
+
     h1 {
         text-align: center;
         font-family: 'Oswald-Medium';
@@ -84,6 +86,49 @@
                 }
             }
 
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .basket {
+        .basket-list_item {
+            padding: 15px 20px;
+        }
+
+        .item-img {
+            img {
+                margin: 10px !important;
+                width: 200px;
+                height: auto;
+            }
+        }
+
+        .item-info {
+            &_title {
+                font-size: 25px;
+            }
+
+            &_text {
+                font-size: 20px;
+            }
+        }
+
+        .basket-bottom {
+            p {
+                font-size: 40px;
+            }
+        }
+    }
+}
+
+
+@media (max-width: 767px) {
+    .basket {
+        .basket-list_item {
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
         }
     }
 }
