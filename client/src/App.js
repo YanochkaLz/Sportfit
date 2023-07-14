@@ -20,9 +20,10 @@ const App = observer(() => {
         user.setUser(data)
         user.setIsAuth(true)
       }
-    }).catch(e => error = true).finally(() => {
-      if(!error) setLoading(false)
-    })
+    }).catch(e => {
+      user.setUser({})
+      user.setIsAuth(false)
+    }).finally(() => setLoading(false))
   }, [user])
 
   if (loading) {
@@ -35,8 +36,8 @@ const App = observer(() => {
     <BrowserRouter>
       <NavBar />
       <AppRoutes />
-      <Footer/>
-      <ScrollToTop/>
+      <Footer />
+      <ScrollToTop />
     </BrowserRouter>
   );
 })
