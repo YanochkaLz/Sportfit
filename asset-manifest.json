@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/Sportfit/static/css/main.f9ed0120.css",
+    "main.js": "/Sportfit/static/js/main.5cba6f37.js",
+    "static/media/man3.png": "/Sportfit/static/media/man3.012ed9b1a1414b7dad37.png",
+    "static/media/man2.png": "/Sportfit/static/media/man2.7fd5e93110698cbcf39d.png",
+    "static/media/walking-bg.jpg": "/Sportfit/static/media/walking-bg.85a80405dbf892b62691.jpg",
+    "static/media/pants-image.png": "/Sportfit/static/media/pants-image.1a08c2c2e00938161864.png",
+    "static/media/OpenSans_Condensed-Light.ttf": "/Sportfit/static/media/OpenSans_Condensed-Light.0ac1c6e857dac7d4044f.ttf",
+    "static/media/50years.png": "/Sportfit/static/media/50years.7914c0fcc13f2b5cce22.png",
+    "static/media/belts.png": "/Sportfit/static/media/belts.b6c3ce2723b0e658cebe.png",
+    "static/media/Oswald-Bold.ttf": "/Sportfit/static/media/Oswald-Bold.87c9feafd7b2f3fd7992.ttf",
+    "static/media/Oswald-Medium.ttf": "/Sportfit/static/media/Oswald-Medium.292bdf409c7b9c1c5683.ttf",
+    "static/media/Oswald-Light.ttf": "/Sportfit/static/media/Oswald-Light.0db1d0c56bdf030d9f31.ttf",
+    "static/media/Oswald-Regular.ttf": "/Sportfit/static/media/Oswald-Regular.e815068d369177121fd8.ttf",
+    "static/media/ties.webp": "/Sportfit/static/media/ties.de08fc71dc0df5b6d078.webp",
+    "static/media/man1.jpg": "/Sportfit/static/media/man1.6cdd0d1c356a22137c36.jpg",
+    "static/media/logo.svg": "/Sportfit/static/media/logo.e248e955c020e90e9c2c9cb47e96e863.svg",
+    "static/media/car.svg": "/Sportfit/static/media/car.96426d14a0290ec2764e0a7cc91805c2.svg",
+    "static/media/box.svg": "/Sportfit/static/media/box.644699d23e3079411ea84572bebc10c4.svg",
+    "static/media/bin.svg": "/Sportfit/static/media/bin.1bd63db6addcbd9174a7025265b21a5b.svg",
+    "static/media/Bag.svg": "/Sportfit/static/media/Bag.df8b85b0588b736a0559a8f1ca8e4fdd.svg",
+    "index.html": "/Sportfit/index.html",
+    "static/media/Search.svg": "/Sportfit/static/media/Search.0d3b4d889675c45f4bd235e5c4b9c620.svg",
+    "static/media/Arrow.svg": "/Sportfit/static/media/Arrow.53f598ffc85f19f97eb724faac774ca7.svg",
+    "static/media/Star1.svg": "/Sportfit/static/media/Star1.5271387859f9d1fd3548c28660e8dd88.svg",
+    "static/media/Star2.svg": "/Sportfit/static/media/Star2.22f968ad6f18c13ca19e97fd32bb3e67.svg",
+    "main.f9ed0120.css.map": "/Sportfit/static/css/main.f9ed0120.css.map",
+    "main.5cba6f37.js.map": "/Sportfit/static/js/main.5cba6f37.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f9ed0120.css",
+    "static/js/main.5cba6f37.js"
+  ]
+}
